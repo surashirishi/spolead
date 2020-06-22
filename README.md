@@ -20,3 +20,6 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+<!-- lint fix -->
+./node_modules/.bin/eslint ./ --fix
