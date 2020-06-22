@@ -42,19 +42,19 @@
         </v-card>
       </v-col>
     </v-flex>
-    <v-btn large>
+    <common-button @click="registUserPage" button-size="large">
       ユーザー登録
-    </v-btn>
+    </common-button>
   </v-layout>
 </template>
 
 <script>
-// import Logo from '~/components/Logo.vue'
+import CommonButton from '~/components/atoms/CommonButton.vue'
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
   components: {
-    // Logo,
+    CommonButton
     // VuetifyLogo
   },
   data () {
@@ -68,6 +68,11 @@ export default {
         { title: 'Rugby', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
         { title: 'Swimming', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 }
       ]
+    }
+  },
+  methods: {
+    registUserPage () {
+      this.$router.push('/signup')
     }
   }
 }
