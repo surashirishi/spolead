@@ -61,7 +61,6 @@
 <script>
 import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
-// import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
   components: {

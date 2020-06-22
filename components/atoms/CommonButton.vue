@@ -1,7 +1,5 @@
 <template>
-  <v-btn @click="click" :color="buttonColor" :width="buttonWidth" large>
-    <!-- <v-btn @click="click" button-size :color="button-color"> -->
-    <!-- ユーザー登録 -->
+  <v-btn @click="click" :color="buttonColor" :width="buttonWidth" large class="common-button">
     <slot />
   </v-btn>
 </template>
