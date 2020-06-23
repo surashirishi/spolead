@@ -57,8 +57,23 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          title: 'Top',
+          to: '/top'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'ログイン',
+          to: '/login'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'アカウント登録',
+          to: '/signup'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'チーム一覧',
+          to: '/teams'
         },
         {
           icon: 'mdi-chart-bubble',

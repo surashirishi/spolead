@@ -29,6 +29,8 @@
         v-for="card in cards"
         :key="card.title"
         :cols="card.flex"
+        @click="goTeamsPage"
+        class="sports"
       >
         <v-card>
           <v-img
@@ -71,6 +73,9 @@ export default {
   methods: {
     registUserPage () {
       this.$router.push('/signup')
+    },
+    goTeamsPage () {
+      this.$router.push('/teams')
     }
   }
 }
@@ -96,5 +101,8 @@ export default {
 }
 .page-content {
   margin: 32px;
+  .sports {
+    cursor: pointer;
+  }
 }
 </style>

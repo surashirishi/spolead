@@ -9,7 +9,7 @@
       <div class="page-header-title">
         <SearchForm />
       </div>
-      <common-button button-color="primary">
+      <common-button @click="showRegistTeamModal" button-color="primary">
         チームを登録する
       </common-button>
     </div>
@@ -54,24 +54,32 @@
             </div>
           </div>
         </div>
+        <div class="page-content-item-footer">
+          <common-button @click="goTeamDetail" button-color="primary">
+            チームの詳細を確認する
+          </common-button>
+        </div>
       </div>
-      <v-divider :inset="false"></v-divider>
+      <v-divider :inset="false" />
     </v-flex>
     <common-button button-size="large" button-color="primary" button-width="25vw">
       ユーザー登録
     </common-button>
+    <team-regist-modal :dialog="registTeamModal" @closeModal="closeModal" />
   </v-layout>
 </template>
 
 <script>
 import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
+import TeamRegistModal from '~/components/organisms/TeamRegistModal.vue'
 import SearchForm from '~/components/molecules/SearchForm.vue'
 
 export default {
   components: {
     CommonButton,
-    SearchForm
+    SearchForm,
+    TeamRegistModal
   },
   data () {
     return {
@@ -80,12 +88,22 @@ export default {
       nickname: '',
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      registTeamModal: false
     }
   },
   methods: {
     goLoginPage () {
       this.$router.push('/login')
+    },
+    goTeamDetail () {
+      this.$router.push('/teamdetails')
+    },
+    showRegistTeamModal () {
+      this.registTeamModal = true
+    },
+    closeModal () {
+      this.registTeamModal = false
     }
   }
 }
@@ -107,16 +125,22 @@ export default {
   &-item {
     margin: 12px;
     padding: 28px;
-    .page-content-item-header {
+    &-header {
       margin: 12px;
     }
-    .page-content-item-main {
+    &-main {
       display: flex;
       justify-content: flex-start;
       align-content: center;
     }
-    .page-content-item-lists {
+    &-lists {
       margin: 12px;
+    }
+    &-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-right: 5vw;
     }
   }
 }
