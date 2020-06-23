@@ -37,18 +37,17 @@
           dark
           class="tabs"
         >
-        <v-tab>
-          トップ
-        </v-tab>
-        <v-tab>
-          口コミ
-        </v-tab>
-        <v-tab>
-          活動場所
-        </v-tab>
-      </v-tabs>
+          <v-tab>
+            トップ
+          </v-tab>
+          <v-tab>
+            口コミ
+          </v-tab>
+          <v-tab>
+            活動場所
+          </v-tab>
+        </v-tabs>
         <div class="page-content-item-main">
-
           <div class="page-content-item-list">
             <v-card class="d-inline-block mx-auto">
               <v-container>
@@ -69,11 +68,11 @@
               <v-row justify="space-between">
                 <v-col cols="auto">
                   <v-textarea
+                    :readonly="true"
                     autocomplete="チーム情報"
                     label="チーム情報"
                     height="200"
-                    :readonly="true"
-                  ></v-textarea>
+                  />
                 </v-col>
               </v-row>
             </v-container>
