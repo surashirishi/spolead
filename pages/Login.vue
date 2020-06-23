@@ -90,11 +90,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/page.scss';
 .page-header {
-  width: 100%;
-  height: 10vh;
-  margin: 16px;
-  font-size: 32px;
+  @include default-page-header;
   display: flex;
   align-items: center;
   justify-content: flex-end;

@@ -110,37 +110,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/page.scss';
 .page-header {
-  width: 100%;
-  height: 10vh;
-  margin: 16px;
-  font-size: 32px;
+  @include default-page-header;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .page-content {
-  width: 100%;
-  margin: 32px;
+  @include default-page-content;
   &-item {
-    margin: 12px;
-    padding: 28px;
-    &-header {
-      margin: 12px;
-    }
-    &-main {
-      display: flex;
-      justify-content: flex-start;
-      align-content: center;
-    }
-    &-lists {
-      margin: 12px;
-    }
     &-footer {
-      display: flex;
       justify-content: flex-end;
-      align-items: center;
-      margin-right: 5vw;
     }
   }
 }
