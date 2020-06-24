@@ -9,7 +9,7 @@
         野球チームA
       </div>
       <div class="page-header-sub">
-        <common-button @click="showRegistTeamModal" button-color="primary">
+        <common-button @click="showRegistReviewsModal" button-color="primary">
           口コミ投稿する
         </common-button>
         <common-button @click="showRegistTeamModal" button-color="primary">
@@ -93,7 +93,7 @@
                       <h1>users.nameさんの口コミ</h1>
                       <h2>性別[genders.men]年代[ages.category]在籍年[enrollments.yaer]あなたの立場[player_flags.player]</h2>
                       <div class="d-flex justify-left align-center">
-                        <v-rating v-model="rating" />
+                        <v-rating v-model="rating" half-increments />
                         <div>{{ rating }}</div>
                         <div>方針:5体制:5活動:5環境:5イベント:5費用:5</div>
                       </div>
@@ -178,6 +178,7 @@
       もっと見る
     </common-button>
     <team-regist-modal :dialog="registTeamModal" @closeModal="closeModal" />
+    <reviews-regist-modal :dialog="registReviewsModal" @closeModal="closeModal" />
   </v-layout>
 </template>
 
@@ -185,11 +186,13 @@
 import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
 import TeamRegistModal from '~/components/organisms/TeamRegistModal.vue'
+import ReviewsRegistModal from '~/components/organisms/ReviewsRegistModal.vue'
 
 export default {
   components: {
     CommonButton,
-    TeamRegistModal
+    TeamRegistModal,
+    ReviewsRegistModal
   },
   data () {
     return {
@@ -201,7 +204,8 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
-      registTeamModal: false
+      registTeamModal: false,
+      registReviewsModal: false
     }
   },
   methods: {
@@ -214,8 +218,12 @@ export default {
     showRegistTeamModal () {
       this.registTeamModal = true
     },
+    showRegistReviewsModal () {
+      this.registReviewsModal = true
+    },
     closeModal () {
       this.registTeamModal = false
+      this.registReviewsModal = false
     }
   }
 }
