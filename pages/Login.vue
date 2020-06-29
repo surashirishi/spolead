@@ -40,8 +40,8 @@
         />
       </v-form>
     </v-flex>
-    <common-button button-size="large" button-color="primary" button-width="25vw">
-      ユーザー登録
+    <common-button @click="login" button-size="large" button-color="primary" button-width="25vw">
+      ログイン
     </common-button>
   </v-layout>
 </template>
@@ -71,6 +71,19 @@ export default {
     }
   },
   methods: {
+    login () {
+      console.log('store', this.$store)
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'login',
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        }).then((res) => {
+          console.log('res', res)
+        })
+    },
     goSignupPage () {
       this.$router.push('/signup')
     },
