@@ -133,14 +133,6 @@ export default {
       rating: 3
     }
   },
-  computed: {
-    currentModal () {
-      return this.$store.getters['modal/isModal']
-    },
-    showBackgroundShadow () {
-      return this.$store.getters['modal/isModal'] !== '' ? 'overlay' : ''
-    }
-  },
   methods: {
     closeModal () {
       this.$emit('closeModal')
