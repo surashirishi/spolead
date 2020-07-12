@@ -26,7 +26,7 @@ export const actions = {
       console.log('req', req)
       axios(req)
         .then((response) => {
-          resolve(response.data)
+          resolve(response)
           console.log('response', response)
         })
         .catch((err) => {

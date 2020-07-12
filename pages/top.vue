@@ -60,13 +60,13 @@ export default {
   data () {
     return {
       cards: [
-        { title: 'Soccer', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 3 },
-        { title: 'Baseball', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 3 },
-        { title: 'Basketball', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 3 },
-        { title: 'Volleyball', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
-        { title: 'Dance', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
-        { title: 'Rugby', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 },
-        { title: 'Swimming', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 3 }
+        { title: 'Soccer', src: require('~/assets/images/soccer.jpg'), flex: 3 },
+        { title: 'Baseball', src: require('~/assets/images/baseball.jpg'), flex: 3 },
+        { title: 'Basketball', src: require('~/assets/images/basketball.jpeg'), flex: 3 },
+        { title: 'Volleyball', src: require('~/assets/images/volleyball.jpeg'), flex: 3 },
+        { title: 'Dance', src: require('~/assets/images/dance.jpeg'), flex: 3 },
+        { title: 'Rugby', src: require('~/assets/images/rugby.jpeg'), flex: 3 },
+        { title: 'Swimming', src: require('~/assets/images/swimming.jpeg'), flex: 3 }
       ]
     }
   },

@@ -81,7 +81,10 @@ export default {
             password: this.password
           }
         }).then((res) => {
-          console.log('res', res)
+          if (res.status === 200) {
+            this.$router.push('/teams')
+            console.log('login users')
+          }
         })
     },
     goSignupPage () {

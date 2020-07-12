@@ -60,7 +60,7 @@
                         <v-img
                           height="200"
                           width="200"
-                          src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+                          :src="require('~/assets/images/teams1.jpeg')"
                         />
                       </v-col>
                     </v-row>
