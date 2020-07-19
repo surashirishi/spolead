@@ -5,5 +5,10 @@ export default {
   login: {
     url: foundation + '/login',
     method: 'post'
+  },
+  // チーム一覧
+  teamIndex: {
+    url: foundation + '/teams',
+    method: 'get'
   }
 }

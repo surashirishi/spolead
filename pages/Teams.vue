@@ -14,8 +14,8 @@
       </common-button>
     </div>
     <v-flex
-      v-for="n in 10"
-      :key="n"
+      v-for="team in teams"
+      :key="team.id"
       xs12
       sm8
       md6
@@ -24,7 +24,7 @@
     >
       <div class="page-content-item">
         <div class="page-content-item-header">
-          野球チームA（東京都墨田区/隅田小学校）
+          {{team.name}} ({{team.address}})
         </div>
         <div class="page-content-item-main">
           <div class="page-content-item-list">
@@ -33,9 +33,9 @@
                 <v-row justify="space-between">
                   <v-col cols="auto">
                     <v-img
+                      :src="team.team_image"
                       height="200"
                       width="200"
-                      :src="require('~/assets/images/teams1.jpeg')"
                     />
                   </v-col>
                 </v-row>
@@ -44,7 +44,7 @@
           </div>
           <div class="page-content-item-list">
             <div class="page-content-item-lists">
-              チームコメントチームコメント
+              {{team.team_information}}
             </div>
             <div class="page-content-item-lists">
               ★★★★★ 5.0評価表示
@@ -89,10 +89,28 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
-      registTeamModal: false
+      registTeamModal: false,
+      teams: []
     }
   },
+  created () {
+    this.getTeams()
+  },
   methods: {
+    getTeams () {
+      console.log('getteams')
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'teamIndex'
+        }).then((res) => {
+          if (res.status === 200) {
+            console.log('res', res)
+            this.teams = res.data
+            console.log('this.teams  ', this.teams)
+            this.$router.push('/teams')
+          }
+        })
+    },
     goLoginPage () {
       this.$router.push('/login')
     },
