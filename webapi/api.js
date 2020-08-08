@@ -10,5 +10,10 @@ export default {
   teamIndex: {
     url: foundation + '/teams',
     method: 'get'
+  },
+  // チーム作成
+  teamCreate: {
+    url: foundation + '/teams',
+    method: 'post'
   }
 }
