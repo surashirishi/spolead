@@ -92,9 +92,10 @@ export default {
   data () {
     return {
       name: '',
-      mail: '',
+      mail_address: '',
       prefecture: '',
       city: '',
+      street_number: '',
       team_image: '',
       sports_id: '',
       team_type: '',
@@ -110,7 +111,10 @@ export default {
           api: 'teamCreate',
           data: {
             name: this.name,
-            mail: this.mail,
+            mail_address: this.mail_address,
+            prefecture: this.prefecture,
+            city: this.city,
+            street_number: this.street_number,
             team_image: this.team_image,
             sports_id: this.sports_id,
             team_type: this.team_type,
@@ -120,7 +124,7 @@ export default {
         })
         .then((response) => {
           console.log(response)
-          if (response.result === true) {
+          if (response.status === 200) {
             this.closeModal()
           }
         })

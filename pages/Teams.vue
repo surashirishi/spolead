@@ -24,7 +24,7 @@
     >
       <div class="page-content-item">
         <div class="page-content-item-header">
-          {{team.name}} ({{team.address}})
+          {{team.name}} ({{team.prefecture}}{{team.city}}{{team.street_number}})
         </div>
         <div class="page-content-item-main">
           <div class="page-content-item-list">
