@@ -39,13 +39,25 @@
                 />
               </v-col>
               <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="['チーム', 'スクール']"
-                  v-model="team_type"
+                <v-select
+                  v-model="selectedTeamTypes"
+                  :items="teamTypeList"
+                  item-text="teamType"
+                  item-value="teamId"
                   label="運営団体"
                   multiple
                 />
               </v-col>
+              <!-- should be applyed following DOM -->
+              <!-- <v-col cols="12" sm="6">
+                <v-select
+                  v-model="selectedTeamTypes"
+                  :items="teamTypeList"
+                  item-text="teamType"
+                  item-value="teamId"
+                  label="対象層"
+                  multiple
+                /> -->
               <v-col cols="12" sm="6">
                 <v-autocomplete
                   :items="['キッズ', '小学生', '中学生', '大学生']"
@@ -101,7 +113,12 @@ export default {
       sports_id: '',
       team_type: '',
       target_age_type: '',
-      team_information: ''
+      team_information: '',
+      selectedTeamTypes: [],
+      teamTypeList: [
+        { teamType: 'チーム', typeId: 1 },
+        { teamType: 'スクール', typeId: 2 }
+      ]
     }
   },
   // watch: {
