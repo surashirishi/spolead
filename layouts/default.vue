@@ -74,11 +74,6 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'チーム一覧',
           to: '/teams'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
         }
       ],
       miniVariant: false,

@@ -24,7 +24,7 @@
     >
       <div class="page-content-item">
         <div class="page-content-item-header">
-          {{team.name}} ({{team.prefecture}}{{team.city}}{{team.street_number}})
+          {{ team.name }} ({{ team.prefecture }}{{ team.city }}{{ team.street_number }})
         </div>
         <div class="page-content-item-main">
           <div class="page-content-item-list">
@@ -33,7 +33,7 @@
                 <v-row justify="space-between">
                   <v-col cols="auto">
                     <v-img
-                      :src="team.team_image"
+                      :src="team.team_image ? team.team_image : ''"
                       height="200"
                       width="200"
                     />
@@ -44,7 +44,7 @@
           </div>
           <div class="page-content-item-list">
             <div class="page-content-item-lists">
-              {{team.team_information}}
+              {{ team.team_information }}
             </div>
             <div class="page-content-item-lists">
               ★★★★★ 5.0評価表示
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="page-content-item-footer">
-          <common-button @click="goTeamDetail" button-color="primary">
+          <common-button @click="goTeamDetail(team.id)" button-color="primary">
             チームの詳細を確認する
           </common-button>
         </div>
@@ -114,8 +114,8 @@ export default {
     goLoginPage () {
       this.$router.push('/login')
     },
-    goTeamDetail () {
-      this.$router.push('/teamdetails')
+    goTeamDetail (teamId) {
+      this.$router.push({ name: 'TeamDetails', params: { teamId } })
     },
     showRegistTeamModal () {
       this.registTeamModal = true

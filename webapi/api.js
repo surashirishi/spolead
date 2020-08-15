@@ -11,6 +11,11 @@ export default {
     url: foundation + '/teams',
     method: 'get'
   },
+  // チーム詳細
+  teamShow: {
+    url: foundation + '/teams/:id',
+    method: 'get'
+  },
   // チーム作成
   teamCreate: {
     url: foundation + '/teams',

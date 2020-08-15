@@ -6,13 +6,13 @@
   >
     <div class="page-header">
       <div class="page-header-title">
-        野球チームA
+        {{ team.name }}
       </div>
       <div class="page-header-sub">
         <common-button @click="showRegistReviewsModal" button-color="primary">
           口コミ投稿する
         </common-button>
-        <common-button @click="showRegistTeamModal" button-color="primary">
+        <common-button @click="showEditTeamModal" button-color="primary">
           チーム編集
         </common-button>
       </div>
@@ -26,10 +26,10 @@
     >
       <div class="page-content-item">
         <div class="page-content-item-header">
-          野球チームA（東京都墨田区/隅田小学校）
+          {{ team.name }}（{{ team.prefecture }} {{ team.city }}/隅田小学校）
         </div>
         <div class="page-content-item-header">
-          活動エリア：東京都墨田区/ジャンル：野球
+          活動エリア：{{ team.prefecture }} {{ team.city }}/ジャンル：{{ sports_name }}
         </div>
         <v-tabs
           v-model="tab"
@@ -38,13 +38,13 @@
           dark
           class="tabs"
         >
-          <v-tab>
+          <v-tab @change="changeTab(1)">
             トップ
           </v-tab>
-          <v-tab>
+          <v-tab @change="changeTab(2)">
             口コミ
           </v-tab>
-          <v-tab>
+          <v-tab @change="changeTab(3)">
             活動場所
           </v-tab>
         </v-tabs>
@@ -58,9 +58,9 @@
                     <v-row justify="space-between">
                       <v-col cols="auto">
                         <v-img
+                          :src="team.team_image ? team.team_image : ''"
                           height="200"
                           width="200"
-                          :src="require('~/assets/images/teams1.jpeg')"
                         />
                       </v-col>
                     </v-row>
@@ -72,7 +72,7 @@
                   <v-row justify="space-between">
                     <v-col cols="auto">
                       <h1>チームトップ情報</h1>
-                      <p>コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント</p>
+                      <p>{{ team.team_information }}</p>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -145,16 +145,11 @@
                 <v-container>
                   <v-row justify="space-between">
                     <v-col cols="auto">
-                      <h1>teamの活動場所</h1>
-                      <h2>性別[genders.men]年代[ages.category]在籍年[enrollments.yaer]あなたの立場[player_flags.player]</h2>
-                      <div class="d-flex justify-left align-center">
-                        <v-rating v-model="rating" />
-                        <div>{{ rating }}</div>
-                        <div>方針:5体制:5活動:5環境:5イベント:5費用:5</div>
-                      </div>
+                      <h1>{{ team.name }}の活動場所</h1>
+                      <div class="d-flex justify-left align-center" />
                       <v-card class="d-inline-block mx-auto" min-width="60vw">
                         <iframe
-                          src="http://maps.google.co.jp/maps?q=〒131-0031 東京都墨田区墨田４丁目６−５&output=embed&t=m&z=16&hl=ja"
+                          :src="googleMap"
                           frameborder="0"
                           scrolling="no"
                           marginheight="0"
@@ -162,7 +157,7 @@
                           width="100%"
                           height="450"
                         />
-                        <v-card-title>〒131-0031 東京都墨田区墨田４丁目６−５</v-card-title>
+                        <v-card-title>{{ team.prefecture }}{{ team.city }}{{ team.street_number }}</v-card-title>
                       </v-card>
                     </v-col>
                   </v-row>
@@ -174,10 +169,14 @@
       </div>
       <v-divider :inset="false" />
     </v-flex>
-    <common-button button-size="large" button-color="primary" button-width="25vw">
+    <common-button v-if="showMoreInfo" button-size="large" button-color="primary" button-width="25vw">
       もっと見る
     </common-button>
-    <team-regist-modal :dialog="registTeamModal" @closeModal="closeModal" />
+    <team-edit-modal
+      :dialog="editTeamModal"
+      :team="team"
+      @closeModal="closeModal"
+    />
     <reviews-regist-modal :dialog="registReviewsModal" @closeModal="closeModal" />
   </v-layout>
 </template>
@@ -185,13 +184,13 @@
 <script>
 import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
-import TeamRegistModal from '~/components/organisms/TeamRegistModal.vue'
+import TeamEditModal from '~/components/organisms/TeamEditModal.vue'
 import ReviewsRegistModal from '~/components/organisms/ReviewsRegistModal.vue'
 
 export default {
   components: {
     CommonButton,
-    TeamRegistModal,
+    TeamEditModal,
     ReviewsRegistModal
   },
   data () {
@@ -204,26 +203,84 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
-      registTeamModal: false,
-      registReviewsModal: false
+      editTeamModal: false,
+      registReviewsModal: false,
+      team: {},
+      sports_name: '',
+      showMoreInfo: true
     }
   },
+  computed: {
+    googleMap () {
+      return `http://maps.google.co.jp/maps?q=${this.team.prefecture + this.team.city + this.team.street_number}&output=embed&t=m&z=16&hl=ja`
+    }
+  },
+  created () {
+    console.log(this.$route.params)
+    this.$store
+      .dispatch('api/apiRequest', {
+        api: 'teamShow',
+        params: {
+          team_id: this.$route.params.teamId
+        }
+      }).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.team = res.data
+          this.whichSports()
+        }
+      })
+  },
   methods: {
+    changeTab (number) {
+      if (number === 2 || number === 3) {
+        this.showMoreInfo = false
+      } else {
+        this.showMoreInfo = true
+      }
+    },
     goLoginPage () {
       this.$router.push('/login')
     },
     goTeamDetail () {
       console.log('teams detail')
     },
-    showRegistTeamModal () {
-      this.registTeamModal = true
+    showEditTeamModal () {
+      this.editTeamModal = true
     },
     showRegistReviewsModal () {
       this.registReviewsModal = true
     },
     closeModal () {
-      this.registTeamModal = false
+      this.editTeamModal = false
       this.registReviewsModal = false
+    },
+    whichSports () {
+      if (this.team !== {}) {
+        switch (this.team.sports_id) {
+          case 1:
+            this.sports_name = 'サッカー'
+            break
+          case 2:
+            this.sports_name = '野球'
+            break
+          case 3:
+            this.sports_name = 'バスケットボール'
+            break
+          case 4:
+            this.sports_name = 'バレーボール'
+            break
+          case 5:
+            this.sports_name = 'ダンス'
+            break
+          case 6:
+            this.sports_name = 'ラグビー'
+            break
+          case 7:
+            this.sports_name = 'スイミング'
+            break
+        }
+      }
     }
   }
 }

@@ -33,11 +33,13 @@
           label="メールアドレス"
           required
         />
+        <!-- user@example.com -->
         <v-text-field
           v-model="password"
           label="パスワード"
           required
         />
+        <!-- mypass -->
       </v-form>
     </v-flex>
     <common-button @click="login" button-size="large" button-color="primary" button-width="25vw">

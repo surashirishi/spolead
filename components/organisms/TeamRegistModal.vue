@@ -13,7 +13,7 @@
                 <v-text-field v-model="name" label="チーム名*" required />
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="mail" label="メールアドレス*" required />
+                <v-text-field v-model="mail_address" label="メールアドレス*" required />
               </v-col>
               <v-col cols="12">
                 <v-autocomplete
@@ -93,6 +93,7 @@ export default {
     return {
       name: '',
       mail_address: '',
+      zipcode: '',
       prefecture: '',
       city: '',
       street_number: '',
@@ -103,9 +104,19 @@ export default {
       team_information: ''
     }
   },
+  // watch: {
+  //   zipcode (zipcode) {
+  //     const _this = this
+  //     new YubinBango.Core(zipcode, function (addr) {
+  //       _this.prefecture = addr.region_id // 都道府県ID
+  //       _this.city = addr.locality // 市区町村
+  //       _this.street_number = addr.street // 町域
+  //     })
+  //   }
+  // },
   methods: {
     regTeam () {
-      console.log(this.name)
+      console.log(this.zipcode)
       this.$store
         .dispatch('api/apiRequest', {
           api: 'teamCreate',
@@ -128,6 +139,30 @@ export default {
             this.closeModal()
           }
         })
+    },
+    upload (file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(file)
+        fr.addEventListener('load', () => {
+          this.team_image = fr.result
+        })
+      } else {
+        this.team_image = ''
+      }
+
+      console.log('team_image', this.team_image)
+    },
+    getBase64 (file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      })
     },
     closeModal () {
       this.$emit('closeModal')
