@@ -132,13 +132,10 @@ export default {
       team_type: '',
       target_age_type: '',
       team_information: '',
-      selectedTeamTypeId: '',
-      selectedTeamTypeName: '',
       teamTypeList: [
         { teamType: 'チーム', typeId: 1 },
         { teamType: 'スクール', typeId: 2 }
       ],
-      selectedSportId: '',
       sportsList: [
           { sportsType: 'バスケ', sportsId: 1 },
           { sportsType: '野球', sportsId: 2 },
@@ -147,7 +144,6 @@ export default {
           { sportsType: 'バレー', sportsId: 5 },
           { sportsType: 'ラグビー', sportsId: 6 },
         ],
-      selectedAgeId: '',
       targetAgeList: [
           { targetAgeType: 'キッズ', ageId: 1 },
           { targetAgeType: '小学生', ageId: 2 },

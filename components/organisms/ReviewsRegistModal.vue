@@ -9,12 +9,6 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <!-- <v-col cols="12">
-                <v-text-field label="チーム名*" required />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="メールアドレス*" required />
-              </v-col> -->
               <v-col cols="12" sm="6">
                 <v-select
                   :items="['男性', '女性']"
