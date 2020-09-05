@@ -11,89 +11,136 @@
             <v-row>
               <v-col cols="12" sm="6">
                 <v-select
-                  :items="['男性', '女性']"
-                  label="性別"
+                  v-model="gender_id"
+                  :items="genderTypeList"
+                  label="あなたの性別"
+                  item-text="gender"
+                  item-value="genderId"
                   required
                 />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
                   :items="['2015〜2020', '2010〜2014', '2005〜2009', '2000〜2004', 'それ以前']"
-                  label="在籍年"
+                  label="あなたの在籍年"
                 />
               </v-col>
               <v-col cols="12">
-                <v-autocomplete
-                  :items="['キッズ', '小学生', '中学生', '大学生']"
-                  label="年代"
-                  multiple
+                <v-select
+                  v-model="age_group"
+                  :items="ageGroupList"
+                  item-text="AgeGroupType"
+                  item-value="AgeGroupId"
+                  label="あなたの年代"
                 />
               </v-col>
               <v-col cols="12">
-                <v-autocomplete
-                  :items="['プレーヤー', '保護者',]"
+                <v-select
+                  :items="playerFlagList"
                   label="あなたの立場"
-                  multiple
+                  item-text="playerType"
+                  item-value="playerFlag"
                 />
               </v-col>
               <v-card-title class="justify-space-between">
                 <span class="headline">チーム口コミ評価</span>
               </v-card-title>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="general_post"
                   autocomplete="総合評価"
                   label="総合評価"
-                  dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ general_point }})
+                  </span>
+                  <v-rating v-model="general_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="policy_post"
                   autocomplete="チーム方針"
                   label="チーム方針"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ policy_point }})
+                  </span>
+                  <v-rating v-model="policy_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="organization_post"
                   autocomplete="チーム体制"
                   label="チーム体制"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ organization_point }})
+                  </span>
+                  <v-rating v-model="organization_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="activity_post"
                   autocomplete="活動内容"
                   label="活動内容"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ activity_point }})
+                  </span>
+                  <v-rating v-model="activity_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="environment_post"
                   autocomplete="チーム環境"
                   label="チーム環境"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ environment_point }})
+                  </span>
+                  <v-rating v-model="environment_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="event_post"
                   autocomplete="イベント"
                   label="イベント"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ event_point }})
+                  </span>
+                  <v-rating v-model="event_point" />
+                </div>
               </v-col>
               <v-col cols="12">
-                <v-rating v-model="rating" />
                 <v-textarea
+                  v-model="cost_post"
                   autocomplete="費用"
                   label="費用"
                   dense
                 />
+                <div class="point-space">
+                  <span class="blue--text mr-2">
+                    ({{ cost_point }})
+                  </span>
+                  <v-rating v-model="cost_point" />
+                </div>
               </v-col>
             </v-row>
           </v-container>
@@ -103,7 +150,7 @@
           <v-btn @click="closeModal" color="blue darken-1" text>
             やめる
           </v-btn>
-          <v-btn @click="closeModal" color="blue darken-1" text>
+          <v-btn @click="postReview" color="blue darken-1" text>
             投稿する
           </v-btn>
         </v-card-actions>
@@ -124,10 +171,74 @@ export default {
   },
   data () {
     return {
-      rating: 3
+      gender_id: '',
+      enrollment_period: '2015〜2020',
+      age_group: '',
+      player_flag: '',
+      general_post: '',
+      general_point: 3,
+      policy_post: '',
+      policy_point: 3,
+      organization_post: '',
+      organization_point: 3,
+      activity_post: '',
+      activity_point: 3,
+      environment_post: '',
+      environment_point: 3,
+      event_post: '',
+      event_point: 3,
+      cost_post: '',
+      cost_point: 3,
+
+      genderTypeList: [
+        { gender: '男性', genderId: 1 },
+        { gender: '女性', genderId: 2 }
+      ],
+      ageGroupList: [
+        { AgeGroupType: 'キッズ', AgeGroupId: 1 },
+        { AgeGroupType: '小学生', AgeGroupId: 2 },
+        { AgeGroupType: '中学生', AgeGroupId: 3 },
+        { AgeGroupType: '大学生', AgeGroupId: 4 },
+        { AgeGroupType: '社会人', AgeGroupId: 5 }
+      ],
+      playerFlagList: [
+        { playerType: 'プレーヤー', playerFlag: 1 },
+        { playerType: '保護者', playerFlag: 2 }
+      ]
     }
   },
   methods: {
+    postReview () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'reviewCreate',
+          data: {
+            gender_id: this.gender_id,
+            enrollment_period: this.enrollment_period,
+            age_group: this.age_group,
+            player_flag: this.player_flag,
+            general_post: this.general_post,
+            general_point: this.general_point,
+            policy_post: this.policy_post,
+            policy_point: this.policy_point,
+            organization_post: this.organization_post,
+            organization_point: this.organization_point,
+            activity_post: this.activity_post,
+            activity_point: this.activity_point,
+            environment_post: this.environment_post,
+            environment_point: this.environment_point,
+            event_post: this.event_post,
+            event_point: this.event_point,
+            cost_post: this.cost_post,
+            cost_point: this.cost_point
+          }
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            this.closeModal()
+          }
+        })
+    },
     closeModal () {
       this.$emit('closeModal')
     }
@@ -135,10 +246,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.v-rating {
-  z-index: 1;
+.point-space {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  top: -20px;
   position: relative;
-  top: 40px;
-  left: 88px;
 }
+// .v-rating {
+//   z-index: 1;
+//   position: relative;
+//   top: -8px;
+//   right: -330px;
+// }
 </style>

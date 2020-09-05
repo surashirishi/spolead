@@ -25,5 +25,10 @@ export default {
   teamEdit: {
     url: foundation + '/teams/:id',
     method: 'patch'
+  },
+  // 口コミ作成（投稿）
+  reviewCreate: {
+    url: foundation + '/reviews',
+    method: 'post'
   }
 }
