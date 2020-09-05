@@ -23,7 +23,7 @@ export const actions = {
       req.headers = {
         Authorization: localStorage.getItem('token')
       }
-      console.log('req', req)
+      console.log('request', req)
       axios(req)
         .then((response) => {
           resolve(response)

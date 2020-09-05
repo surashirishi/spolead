@@ -16,11 +16,24 @@
                 <v-text-field v-model="mail_address" label="メールアドレス*" required />
               </v-col>
               <v-col cols="12">
-                <v-autocomplete
+                <!-- NOTE once simple select  -->
+                <!-- <v-autocomplete
                   :items="['野球', 'バスケ', 'サッカー', 'ダンス', 'バレー', 'ラグビー']"
                   v-model="sports_id"
                   label="sportsジャンル"
                   multiple
+                /> -->
+                <v-select
+                  :items="sportsList"
+                  v-model="sports_id"
+                  label="sportsジャンル"
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-file-input
+                  @change="upload"
+                  label="イメージ画像"
+                  prepend-icon="mdi-camera"
                 />
               </v-col>
               <v-col cols="12" sm="6">
@@ -39,6 +52,7 @@
                 />
               </v-col>
               <v-col cols="12" sm="6">
+                <!-- NOTE once simple select
                 <v-select
                   v-model="selectedTeamTypes"
                   :items="teamTypeList"
@@ -46,24 +60,26 @@
                   item-value="teamId"
                   label="運営団体"
                   multiple
-                />
-              </v-col>
-              <!-- should be applyed following DOM -->
-              <!-- <v-col cols="12" sm="6">
+                /> -->
                 <v-select
                   v-model="selectedTeamTypes"
                   :items="teamTypeList"
                   item-text="teamType"
                   item-value="teamId"
-                  label="対象層"
-                  multiple
-                /> -->
+                  label="運営団体"
+                />
+              </v-col>
               <v-col cols="12" sm="6">
-                <v-autocomplete
+                <!-- <v-autocomplete
                   :items="['キッズ', '小学生', '中学生', '大学生']"
                   v-model="target_age_type"
                   label="対象層"
                   multiple
+                /> -->
+                <v-select
+                  :items="['キッズ', '小学生', '中学生', '大学生']"
+                  v-model="target_age_type"
+                  label="対象層"
                 />
               </v-col>
               <v-col cols="12">
@@ -118,7 +134,8 @@ export default {
       teamTypeList: [
         { teamType: 'チーム', typeId: 1 },
         { teamType: 'スクール', typeId: 2 }
-      ]
+      ],
+      sportsList: ['野球', 'バスケ', 'サッカー', 'ダンス', 'バレー', 'ラグビー']
     }
   },
   // watch: {
@@ -133,7 +150,6 @@ export default {
   // },
   methods: {
     regTeam () {
-      console.log(this.zipcode)
       this.$store
         .dispatch('api/apiRequest', {
           api: 'teamCreate',
@@ -145,13 +161,12 @@ export default {
             street_number: this.street_number,
             team_image: this.team_image,
             sports_id: this.sports_id,
-            team_type: this.team_type,
+            team_type: this.selectedTeamTypes,
             target_age_type: this.target_age_type,
             team_information: this.team_information
           }
         })
         .then((response) => {
-          console.log(response)
           if (response.status === 200) {
             this.closeModal()
           }

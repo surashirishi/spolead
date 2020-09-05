@@ -20,5 +20,10 @@ export default {
   teamCreate: {
     url: foundation + '/teams',
     method: 'post'
+  },
+  // チーム作成
+  teamEdit: {
+    url: foundation + '/teams/:id',
+    method: 'patch'
   }
 }

@@ -104,7 +104,6 @@ export default {
           api: 'teamIndex'
         }).then((res) => {
           if (res.status === 200) {
-            console.log('res', res)
             this.teams = res.data
             console.log('this.teams  ', this.teams)
             this.$router.push('/teams')

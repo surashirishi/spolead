@@ -173,6 +173,7 @@
       もっと見る
     </common-button>
     <team-edit-modal
+      v-if="editTeamModal"
       :dialog="editTeamModal"
       :team="team"
       @closeModal="closeModal"
@@ -216,7 +217,7 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.params)
+    console.log('TeamDetailparams', this.$route.params)
     this.$store
       .dispatch('api/apiRequest', {
         api: 'teamShow',

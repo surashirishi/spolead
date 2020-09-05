@@ -11,17 +11,18 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="team.name" label="チーム名*" required />
+                <v-text-field v-model="name" label="チーム名*" required />
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="team.mail_address" label="メールアドレス*" required />
+                <v-text-field v-model="mail_address" label="メールアドレス*" required />
               </v-col>
               <v-col cols="12">
-                <v-autocomplete
-                  :items="['野球', 'バスケ', 'サッカー', 'ダンス', 'バレー', 'ラグビー']"
-                  v-model="team.sports_id"
+                <v-select
+                  v-model="sports_id"
+                  :items="sportsList"
                   label="sportsジャンル"
-                  multiple
+                  item-text="sportsType"
+                  item-value="sportsId"
                 />
                 <v-col cols="12">
                   <v-file-input
@@ -34,7 +35,7 @@
               <v-col cols="12" sm="6">
                 <v-select
                   :items="['東京都', '大阪府', '京都府', '神奈川県']"
-                  v-model="team.prefecture"
+                  v-model="prefecture"
                   label="都道府県"
                   required
                 />
@@ -42,39 +43,28 @@
               <v-col cols="12" sm="6">
                 <v-select
                   :items="['墨田区', '大田区', '台東区', '江戸川区']"
-                  v-model="team.city"
+                  v-model="city"
                   label="市町村"
                 />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  v-model="selectedTeamTypes"
+                  v-model="team_type"
                   :items="teamTypeList"
                   item-text="teamType"
-                  item-value="teamId"
+                  item-value="typeId"
                   label="運営団体"
-                  multiple
                 />
-                <!-- Need to fix!! DB column like following [type1 | type2 ...] -->
-                <!-- and also target_age_type fix same -->
               </v-col>
               <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="['キッズ', '小学生', '中学生', '大学生']"
-                  v-model="team.target_age_type"
+                <v-select
+                  v-model="target_age_type"
+                  :items="targetAgeList"
+                  item-text="targetAgeType"
+                  item-value="ageId"
                   label="対象層"
                 />
               </v-col>
-              <!-- should be applyed following DOM -->
-              <!-- <v-col cols="12" sm="6">
-                <v-select
-                  v-model="selectedTeamTypes"
-                  :items="teamTypeList"
-                  item-text="teamType"
-                  item-value="teamId"
-                  label="対象層"
-                  multiple
-                /> -->
               <v-col cols="12">
                 <v-textarea
                   v-model="team_information"
@@ -91,7 +81,7 @@
           <v-btn @click="closeModal" color="blue darken-1" text>
             Close
           </v-btn>
-          <v-btn @click="regTeam" color="blue darken-1" text>
+          <v-btn @click="updateTeam" color="blue darken-1" text>
             Save
           </v-btn>
         </v-card-actions>
@@ -114,8 +104,23 @@ export default {
       default: () => {}
     }
   },
+  mounted() {
+    this.id = this.team.id
+    this.name = this.team.name
+    this.mail_address = this.team.mail_address
+    this.prefecture = this.team.prefecture
+    this.city = this.team.city
+    this.street_number = this.team.street_number
+    this.street_number = this.team.street_number
+    this.team_image = this.team.team_image
+    this.sports_id = this.team.sports_id
+    this.team_type = this.team.team_type
+    this.target_age_type = this.team.target_age_type
+    this.team_information = this.team.team_information
+  },
   data () {
     return {
+      id: '',
       name: '',
       mail_address: '',
       zipcode: '',
@@ -127,20 +132,37 @@ export default {
       team_type: '',
       target_age_type: '',
       team_information: '',
-      selectedTeamTypes: [],
+      selectedTeamTypeId: '',
+      selectedTeamTypeName: '',
       teamTypeList: [
         { teamType: 'チーム', typeId: 1 },
         { teamType: 'スクール', typeId: 2 }
-      ]
+      ],
+      selectedSportId: '',
+      sportsList: [
+          { sportsType: 'バスケ', sportsId: 1 },
+          { sportsType: '野球', sportsId: 2 },
+          { sportsType: 'サッカー', sportsId: 3 },
+          { sportsType: 'ダンス', sportsId: 4 },
+          { sportsType: 'バレー', sportsId: 5 },
+          { sportsType: 'ラグビー', sportsId: 6 },
+        ],
+      selectedAgeId: '',
+      targetAgeList: [
+          { targetAgeType: 'キッズ', ageId: 1 },
+          { targetAgeType: '小学生', ageId: 2 },
+          { targetAgeType: '中学生', ageId: 3 },
+          { targetAgeType: '大学生', ageId: 4 },
+        ]
     }
   },
   methods: {
-    regTeam () {
-      console.log(this.zipcode)
+    updateTeam () {
       this.$store
         .dispatch('api/apiRequest', {
-          api: 'teamCreate',
+          api: 'teamEdit',
           data: {
+            id: this.id,
             name: this.name,
             mail_address: this.mail_address,
             prefecture: this.prefecture,
@@ -154,7 +176,6 @@ export default {
           }
         })
         .then((response) => {
-          console.log(response)
           if (response.status === 200) {
             this.closeModal()
           }
@@ -186,7 +207,7 @@ export default {
     },
     closeModal () {
       this.$emit('closeModal')
-    }
+    },
   }
 }
 </script>
