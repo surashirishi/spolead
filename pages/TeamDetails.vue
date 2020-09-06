@@ -79,8 +79,8 @@
               </div>
             </div>
             <div class="page-content-item-footer">
-              <common-button @click="moveToReview" button-color="primary">
-                口コミ情報（最新１件）
+              <common-button @click="moveToReview" v-if="unreadReviewCount > 0" button-color="primary">
+                口コミ情報（最新{{ unreadReviewCount }}件）
               </common-button>
             </div>
           </v-tab-item>
@@ -172,11 +172,24 @@ export default {
   computed: {
     googleMap () {
       return `http://maps.google.co.jp/maps?q=${this.team.prefecture + this.team.city + this.team.street_number}&output=embed&t=m&z=16&hl=ja`
+    },
+    unreadReviewCount () {
+      const loginDateTime = new Date(localStorage.getItem('loginDateTime'))
+      let unreadCount = 0
+      this.reviewsList.map((review) => {
+        console.log('post DAte', new Date(review.created_at).getTime())
+        console.log('login DAte', loginDateTime.getTime())
+        console.log('test', new Date(review.created_at) > loginDateTime.getTime())
+        if (new Date(review.created_at).getTime() > loginDateTime) {
+          unreadCount += 1
+        }
+      })
+      return unreadCount
     }
     // computed avarage point but unnecessary this point.
     // avarageGeneralReviewPoint () {
     //   let sumGeneralPoint = 0
-    //   return this.reviewsList.map((review) => {
+    //   this.reviewsList.map((review) => {
     //     sumGeneralPoint += review.general_point
     //   })
     //   return sumGeneralPoint / this.reviewsList.length
