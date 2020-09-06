@@ -41,7 +41,7 @@
           <v-tab @change="changeTab(1)">
             トップ
           </v-tab>
-          <v-tab @change="changeTab(2)">
+          <v-tab id="reviews" @change="changeTab(2)">
             口コミ
           </v-tab>
           <v-tab @change="changeTab(3)">
@@ -79,64 +79,15 @@
               </div>
             </div>
             <div class="page-content-item-footer">
-              <common-button @click="goTeamDetail" button-color="primary">
+              <common-button @click="moveToReview" button-color="primary">
                 口コミ情報（最新１件）
               </common-button>
             </div>
           </v-tab-item>
           <v-tab-item>
-            <div class="page-content-item-main">
-              <div class="page-content-item-list">
-                <v-container>
-                  <v-row justify="space-between">
-                    <v-col cols="auto">
-                      <h1>users.nameさんの口コミ</h1>
-                      <h2>性別[genders.men]年代[ages.category]在籍年[enrollments.yaer]あなたの立場[player_flags.player]</h2>
-                      <div class="d-flex justify-left align-center">
-                        <v-rating v-model="rating" half-increments />
-                        <div>{{ rating }}</div>
-                        <div>方針:5体制:5活動:5環境:5イベント:5費用:5</div>
-                      </div>
-                      <v-card class="d-inline-block mx-auto" min-width="60vw">
-                        <v-card-title>
-                          口コミ評価
-                        </v-card-title>
-                        <v-card-subtitle>
-                          評価理由
-                        </v-card-subtitle>
-                        <v-card-text>
-                          [総合]
-                          -general_post
-                        </v-card-text>
-                        <v-card-text>
-                          [チーム方針]
-                          -policy_post
-                        </v-card-text>
-                        <v-card-text>
-                          [チーム体制]
-                          - organization_post
-                        </v-card-text>
-                        <v-card-text>
-                          [活動内容]
-                          - activity_post
-                        </v-card-text>
-                        <v-card-text>
-                          [チーム環境]
-                          - environment_post
-                        </v-card-text>
-                        <v-card-text>
-                          [イベント]
-                          - event_post
-                        </v-card-text>
-                        <v-card-text>
-                          [費用]
-                          - cost_post
-                        </v-card-text>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </div>
+            <!-- display reviews as much as review count -->
+            <div v-for="review in reviewsList" :key="review.id">
+              <review-content :review="review" />
             </div>
           </v-tab-item>
           <v-tab-item>
@@ -169,8 +120,8 @@
       </div>
       <v-divider :inset="false" />
     </v-flex>
-    <common-button v-if="showMoreInfo" button-size="large" button-color="primary" button-width="25vw">
-      もっと見る
+    <common-button v-if="showMoreInfo" @click="moveToReview" button-size="large" button-color="primary" button-width="25vw">
+      口コミをもっと見る
     </common-button>
     <team-edit-modal
       v-if="editTeamModal"
@@ -178,7 +129,11 @@
       :team="team"
       @closeModal="closeModal"
     />
-    <reviews-regist-modal :dialog="registReviewsModal" @closeModal="closeModal" />
+    <reviews-regist-modal
+      :dialog="registReviewsModal"
+      @closeModal="closeModal"
+      :teamId="team.id"
+    />
   </v-layout>
 </template>
 
@@ -187,12 +142,14 @@ import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
 import TeamEditModal from '~/components/organisms/TeamEditModal.vue'
 import ReviewsRegistModal from '~/components/organisms/ReviewsRegistModal.vue'
+import ReviewContent from '~/components/organisms/ReviewContent.vue'
 
 export default {
   components: {
     CommonButton,
     TeamEditModal,
-    ReviewsRegistModal
+    ReviewsRegistModal,
+    ReviewContent
   },
   data () {
     return {
@@ -207,6 +164,7 @@ export default {
       editTeamModal: false,
       registReviewsModal: false,
       team: {},
+      reviewsList: [],
       sports_name: '',
       showMoreInfo: true
     }
@@ -215,6 +173,14 @@ export default {
     googleMap () {
       return `http://maps.google.co.jp/maps?q=${this.team.prefecture + this.team.city + this.team.street_number}&output=embed&t=m&z=16&hl=ja`
     }
+    // computed avarage point but unnecessary this point.
+    // avarageGeneralReviewPoint () {
+    //   let sumGeneralPoint = 0
+    //   return this.reviewsList.map((review) => {
+    //     sumGeneralPoint += review.general_point
+    //   })
+    //   return sumGeneralPoint / this.reviewsList.length
+    // }
   },
   created () {
     console.log('TeamDetailparams', this.$route.params)
@@ -231,6 +197,18 @@ export default {
           this.whichSports()
         }
       })
+    this.$store
+      .dispatch('api/apiRequest', {
+        api: 'reviewIndex',
+        params: {
+          team_id: this.$route.params.teamId
+        }
+      }).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.reviewsList = res.data
+        }
+      })
   },
   methods: {
     changeTab (number) {
@@ -242,9 +220,6 @@ export default {
     },
     goLoginPage () {
       this.$router.push('/login')
-    },
-    goTeamDetail () {
-      console.log('teams detail')
     },
     showEditTeamModal () {
       this.editTeamModal = true
@@ -282,6 +257,9 @@ export default {
             break
         }
       }
+    },
+    moveToReview () {
+      document.getElementById('reviews').click()
     }
   }
 }

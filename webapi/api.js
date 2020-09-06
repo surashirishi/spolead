@@ -30,5 +30,10 @@ export default {
   reviewCreate: {
     url: foundation + '/reviews',
     method: 'post'
+  },
+  // 口コミ一覧
+  reviewIndex: {
+    url: foundation + '/reviews',
+    method: 'get'
   }
 }

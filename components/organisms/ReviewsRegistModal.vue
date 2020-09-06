@@ -167,6 +167,10 @@ export default {
     dialog: {
       type: Boolean,
       default: false
+    },
+    teamId: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -230,7 +234,8 @@ export default {
             event_post: this.event_post,
             event_point: this.event_point,
             cost_post: this.cost_post,
-            cost_point: this.cost_point
+            cost_point: this.cost_point,
+            team_id: this.teamId
           }
         })
         .then((response) => {
