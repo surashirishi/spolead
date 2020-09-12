@@ -98,15 +98,17 @@ export default {
   },
   methods: {
     getTeams () {
-      console.log('getteams')
+      console.log('getteams param = ', this.$route.params.sportsId)
       this.$store
         .dispatch('api/apiRequest', {
-          api: 'teamIndex'
+          api: 'teamIndex',
+          params: {
+            sports_id: this.$route.params.sportsId
+          }
         }).then((res) => {
           if (res.status === 200) {
             this.teams = res.data
             console.log('this.teams  ', this.teams)
-            this.$router.push('/teams')
           }
         })
     },

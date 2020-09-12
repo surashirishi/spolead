@@ -29,7 +29,7 @@
         v-for="card in cards"
         :key="card.title"
         :cols="card.flex"
-        @click="goTeamsPage"
+        @click="goTeamsPage(card.id)"
         class="sports"
       >
         <v-card>
@@ -60,13 +60,13 @@ export default {
   data () {
     return {
       cards: [
-        { title: 'Soccer', src: require('~/assets/images/soccer.jpg'), flex: 3 },
-        { title: 'Baseball', src: require('~/assets/images/baseball.jpg'), flex: 3 },
-        { title: 'Basketball', src: require('~/assets/images/basketball.jpeg'), flex: 3 },
-        { title: 'Volleyball', src: require('~/assets/images/volleyball.jpeg'), flex: 3 },
-        { title: 'Dance', src: require('~/assets/images/dance.jpeg'), flex: 3 },
-        { title: 'Rugby', src: require('~/assets/images/rugby.jpeg'), flex: 3 },
-        { title: 'Swimming', src: require('~/assets/images/swimming.jpeg'), flex: 3 }
+        { id: 1, title: 'Soccer', src: require('~/assets/images/soccer.jpg'), flex: 3 },
+        { id: 2, title: 'Baseball', src: require('~/assets/images/baseball.jpg'), flex: 3 },
+        { id: 3, title: 'Basketball', src: require('~/assets/images/basketball.jpeg'), flex: 3 },
+        { id: 4, title: 'Volleyball', src: require('~/assets/images/volleyball.jpeg'), flex: 3 },
+        { id: 5, title: 'Dance', src: require('~/assets/images/dance.jpeg'), flex: 3 },
+        { id: 6, title: 'Rugby', src: require('~/assets/images/rugby.jpeg'), flex: 3 },
+        { id: 7, title: 'Swimming', src: require('~/assets/images/swimming.jpeg'), flex: 3 }
       ]
     }
   },
@@ -74,8 +74,8 @@ export default {
     registUserPage () {
       this.$router.push('/signup')
     },
-    goTeamsPage () {
-      this.$router.push('/teams')
+    goTeamsPage (sportsId) {
+      this.$router.push({ name: 'Teams', params: { sportsId } })
     }
   }
 }
