@@ -9,9 +9,12 @@
         総合スポーツチーム口コミ情報サイト
       </div>
       <div class="page-header-title">
-        <v-btn large>
+        <common-button @click="topPrefecture" button-size="large">
+          エリアから探す
+        </common-button>
+        <common-button @click="loginPage" button-size="large">
           ログイン
-        </v-btn>
+        </common-button>
       </div>
     </div>
     <div class="page-title">
@@ -76,6 +79,9 @@ export default {
     },
     goTeamsPage (sportsId) {
       this.$router.push({ name: 'Teams', params: { sportsId } })
+    },
+    topPrefecture () {
+      this.$router.push('/topPrefecture')
     }
   }
 }

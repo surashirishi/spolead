@@ -23,6 +23,9 @@ export const actions = {
       req.headers = {
         Authorization: localStorage.getItem('token')
       }
+      if (reqData.api === 'getCityApi') {
+        req.headers['X-API-KEY'] = 'UTcSHZB4MAnbEfmMQznGeiFmyapUsZjwhz9ulUrv'
+      }
       console.log('request', req)
       axios(req)
         .then((response) => {

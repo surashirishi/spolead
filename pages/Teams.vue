@@ -98,13 +98,24 @@ export default {
   },
   methods: {
     getTeams () {
-      console.log('getteams param = ', this.$route.params.sportsId)
+      console.log('getteams param = ', this.$route.params)
+      let params = {}
+      // get Teams related to sportsId
+      if (this.$route.params.sportsId) {
+        params = {
+          sports_id: this.$route.params.sportsId
+        }
+      // get Teams related to cityCodes
+      } else if (this.$route.params.cityCode) {
+        params = {
+          city_code: this.$route.params.cityCode
+        }
+      }
+
       this.$store
         .dispatch('api/apiRequest', {
           api: 'teamIndex',
-          params: {
-            sports_id: this.$route.params.sportsId
-          }
+          params
         }).then((res) => {
           if (res.status === 200) {
             this.teams = res.data
