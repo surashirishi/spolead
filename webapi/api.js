@@ -1,6 +1,11 @@
 const foundation = 'http://localhost:3000/v1'
 
 export default {
+  // 都道府県取得外部API
+  getPrefApi: {
+    url: 'https://opendata.resas-portal.go.jp/api/v1/prefectures',
+    method: 'get'
+  },
   // 市町村取得外部API
   getCityApi: {
     url: 'https://opendata.resas-portal.go.jp/api/v1/cities',

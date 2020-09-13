@@ -24,9 +24,11 @@
                   multiple
                 /> -->
                 <v-select
-                  :items="sportsList"
                   v-model="sports_id"
+                  :items="sportsList"
                   label="sportsジャンル"
+                  item-text="sportsType"
+                  item-value="sportsId"
                 />
               </v-col>
               <v-col cols="12">
@@ -37,48 +39,51 @@
                 />
               </v-col>
               <v-col cols="12" sm="6">
+                <!-- get Pref from API -->
                 <v-select
-                  :items="['東京都', '大阪府', '京都府', '神奈川県']"
-                  v-model="prefecture"
+                  @change="selectPref(prefecture_code)"
+                  v-model="prefecture_code"
+                  :items="prefectureList"
+                  item-text="prefName"
+                  item-value="prefCode"
                   label="都道府県"
                   required
                 />
               </v-col>
               <v-col cols="12" sm="6">
+                <!-- get City from API -->
                 <v-select
-                  :items="['墨田区', '大田区', '台東区', '江戸川区']"
-                  v-model="city"
-                  label="市町村"
+                  @change="selectCity(city_code)"
+                  v-model="city_code"
+                  :items="cityList"
+                  item-text="cityName"
+                  item-value="cityCode"
+                  label="区市町村"
+                  required
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="street_number"
+                  label="番地・所在地"
+                  required
                 />
               </v-col>
               <v-col cols="12" sm="6">
-                <!-- NOTE once simple select
                 <v-select
-                  v-model="selectedTeamTypes"
+                  v-model="team_type"
                   :items="teamTypeList"
                   item-text="teamType"
-                  item-value="teamId"
-                  label="運営団体"
-                  multiple
-                /> -->
-                <v-select
-                  v-model="selectedTeamTypes"
-                  :items="teamTypeList"
-                  item-text="teamType"
-                  item-value="teamId"
+                  item-value="typeId"
                   label="運営団体"
                 />
               </v-col>
               <v-col cols="12" sm="6">
-                <!-- <v-autocomplete
-                  :items="['キッズ', '小学生', '中学生', '大学生']"
-                  v-model="target_age_type"
-                  label="対象層"
-                  multiple
-                /> -->
                 <v-select
-                  :items="['キッズ', '小学生', '中学生', '大学生']"
                   v-model="target_age_type"
+                  :items="targetAgeList"
+                  item-text="targetAgeType"
+                  item-value="ageId"
                   label="対象層"
                 />
               </v-col>
@@ -119,10 +124,14 @@ export default {
   },
   data () {
     return {
+      prefectureList: [],
+      cityList: ['都道府県を選択してください'],
       name: '',
       mail_address: '',
       zipcode: '',
+      prefecture_code: '',
       prefecture: '',
+      city_code: '',
       city: '',
       street_number: '',
       team_image: '',
@@ -130,12 +139,25 @@ export default {
       team_type: '',
       target_age_type: '',
       team_information: '',
-      selectedTeamTypes: [],
       teamTypeList: [
         { teamType: 'チーム', typeId: 1 },
         { teamType: 'スクール', typeId: 2 }
       ],
-      sportsList: ['野球', 'バスケ', 'サッカー', 'ダンス', 'バレー', 'ラグビー']
+      sportsList: [
+        { sportsType: 'サッカー', sportsId: 1 },
+        { sportsType: '野球', sportsId: 2 },
+        { sportsType: 'バスケット', sportsId: 3 },
+        { sportsType: 'バレー', sportsId: 4 },
+        { sportsType: 'ダンス', sportsId: 5 },
+        { sportsType: 'ラグビー', sportsId: 6 },
+        { sportsType: 'スイミング', sportsId: 7 }
+      ],
+      targetAgeList: [
+        { targetAgeType: 'キッズ', ageId: 1 },
+        { targetAgeType: '小学生', ageId: 2 },
+        { targetAgeType: '中学生', ageId: 3 },
+        { targetAgeType: '大学生', ageId: 4 }
+      ]
     }
   },
   // watch: {
@@ -148,7 +170,37 @@ export default {
   //     })
   //   }
   // },
+  created () {
+    this.getPrefApi()
+  },
   methods: {
+    getPrefApi () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'getPrefApi'
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.result)
+            this.prefectureList = response.data.result
+          }
+        })
+    },
+    getCityApi (prefCode) {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'getCityApi',
+          params: {
+            prefCode
+          }
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.result)
+            this.cityList = response.data.result
+          }
+        })
+    },
     regTeam () {
       this.$store
         .dispatch('api/apiRequest', {
@@ -156,12 +208,14 @@ export default {
           data: {
             name: this.name,
             mail_address: this.mail_address,
+            prefecture_code: this.prefecture_code,
             prefecture: this.prefecture,
+            city_code: this.city_code,
             city: this.city,
             street_number: this.street_number,
             team_image: this.team_image,
             sports_id: this.sports_id,
-            team_type: this.selectedTeamTypes,
+            team_type: this.team_type,
             target_age_type: this.target_age_type,
             team_information: this.team_information
           }
@@ -198,6 +252,25 @@ export default {
     },
     closeModal () {
       this.$emit('closeModal')
+    },
+    selectPref (prefCode) {
+      console.log('prefCode', prefCode)
+      this.getCityApi(prefCode)
+
+      const prefecture = this.prefectureList.filter(function (pref) {
+        return pref.prefCode === prefCode
+      })
+      this.prefecture = prefecture[0].prefName
+      console.log('pref Name', this.prefecture)
+    },
+    selectCity (cityCode) {
+      console.log('cityCode', cityCode)
+
+      const cityName = this.cityList.filter(function (city) {
+        return city.cityCode === cityCode
+      })
+      this.city = cityName[0].cityName
+      console.log('city Name', this.city)
     }
   }
 }

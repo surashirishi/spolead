@@ -26,7 +26,7 @@
     >
       <div class="page-content-item">
         <div class="page-content-item-header">
-          {{ team.name }}（{{ team.prefecture }} {{ team.city }}/隅田小学校）
+          {{ team.name }}（{{ team.prefecture }} {{ team.city }}）
         </div>
         <div class="page-content-item-header">
           活動エリア：{{ team.prefecture }} {{ team.city }}/ジャンル：{{ sports_name }}
@@ -207,6 +207,7 @@ export default {
         console.log(res)
         if (res.status === 200) {
           this.team = res.data
+          console.log(this.team)
           this.whichSports()
         }
       })

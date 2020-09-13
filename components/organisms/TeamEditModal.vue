@@ -33,18 +33,34 @@
                 </v-col>
               </v-col>
               <v-col cols="12" sm="6">
+                <!-- get Pref from API -->
                 <v-select
-                  :items="['東京都', '大阪府', '京都府', '神奈川県']"
-                  v-model="prefecture"
+                  @change="selectPref(prefecture_code)"
+                  v-model="prefecture_code"
+                  :items="prefectureList"
+                  item-text="prefName"
+                  item-value="prefCode"
                   label="都道府県"
                   required
                 />
               </v-col>
               <v-col cols="12" sm="6">
+                <!-- get City from API -->
                 <v-select
-                  :items="['墨田区', '大田区', '台東区', '江戸川区']"
-                  v-model="city"
-                  label="市町村"
+                  @change="selectCity(city_code)"
+                  v-model="city_code"
+                  :items="cityList"
+                  item-text="cityName"
+                  item-value="cityCode"
+                  label="区市町村"
+                  required
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="street_number"
+                  label="番地・所在地"
+                  required
                 />
               </v-col>
               <v-col cols="12" sm="6">
@@ -104,13 +120,22 @@ export default {
       default: () => {}
     }
   },
+  created () {
+    this.getPrefApi()
+  },
   mounted() {
+    console.log('team', this.team)
     this.id = this.team.id
     this.name = this.team.name
     this.mail_address = this.team.mail_address
     this.prefecture = this.team.prefecture
+    this.prefecture_code = this.team.prefecture_code
+    // set initial value
+    this.prefectureList = [{ prefName: this.team.prefecture, prefCode: this.prefecture_code}]
     this.city = this.team.city
-    this.street_number = this.team.street_number
+    this.city_code = this.team.city_code
+    // set initial value
+    this.cityList = [{ cityName: this.team.city, cityCode: this.city_code}]
     this.street_number = this.team.street_number
     this.team_image = this.team.team_image
     this.sports_id = this.team.sports_id
@@ -120,11 +145,17 @@ export default {
   },
   data () {
     return {
+      prefectureList: [],
+      cityList: ['都道府県を選択してください'],
       id: '',
       name: '',
       mail_address: '',
       zipcode: '',
+      initial_prefecutre: '',
+      prefecture_code: '',
       prefecture: '',
+      initial_city: '',
+      city_code: '',
       city: '',
       street_number: '',
       team_image: '',
@@ -137,22 +168,50 @@ export default {
         { teamType: 'スクール', typeId: 2 }
       ],
       sportsList: [
-          { sportsType: 'バスケ', sportsId: 1 },
+          { sportsType: 'サッカー', sportsId: 1 },
           { sportsType: '野球', sportsId: 2 },
-          { sportsType: 'サッカー', sportsId: 3 },
-          { sportsType: 'ダンス', sportsId: 4 },
-          { sportsType: 'バレー', sportsId: 5 },
+          { sportsType: 'バスケット', sportsId: 3 },
+          { sportsType: 'バレー', sportsId: 4 },
+          { sportsType: 'ダンス', sportsId: 5 },
           { sportsType: 'ラグビー', sportsId: 6 },
-        ],
+          { sportsType: 'スイミング', sportsId: 7 },
+      ],
       targetAgeList: [
           { targetAgeType: 'キッズ', ageId: 1 },
           { targetAgeType: '小学生', ageId: 2 },
           { targetAgeType: '中学生', ageId: 3 },
           { targetAgeType: '大学生', ageId: 4 },
-        ]
+      ]
     }
   },
   methods: {
+    getPrefApi () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'getPrefApi'
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.result)
+            this.prefectureList = response.data.result
+          }
+        })
+    },
+    getCityApi (prefCode) {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'getCityApi',
+          params: {
+            prefCode
+          }
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.result)
+            this.cityList = response.data.result
+          }
+        })
+    },
     updateTeam () {
       this.$store
         .dispatch('api/apiRequest', {
@@ -161,7 +220,9 @@ export default {
             id: this.id,
             name: this.name,
             mail_address: this.mail_address,
+            prefecture_code: this.prefecture_code,
             prefecture: this.prefecture,
+            city_code: this.city_code,
             city: this.city,
             street_number: this.street_number,
             team_image: this.team_image,
@@ -204,6 +265,25 @@ export default {
     closeModal () {
       this.$emit('closeModal')
     },
+    selectPref (prefCode) {
+      console.log('prefCode', prefCode)
+      this.getCityApi(prefCode)
+
+      const prefecture = this.prefectureList.filter(function (pref) {
+        return pref.prefCode === prefCode
+      })
+      this.prefecture = prefecture[0].prefName
+      console.log('pref Name', this.prefecture)
+    },
+    selectCity (cityCode) {
+      console.log('cityCode', cityCode)
+
+      const cityName = this.cityList.filter(function (city) {
+        return city.cityCode === cityCode
+      })
+      this.city = cityName[0].cityName
+      console.log('city Name', this.city)
+    }
   }
 }
 </script>

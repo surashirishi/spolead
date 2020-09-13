@@ -57,8 +57,13 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Top',
+          title: 'スポーツ一覧',
           to: '/top'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'エリアから探す',
+          to: '/topPrefecture'
         },
         {
           icon: 'mdi-chart-bubble',
@@ -69,11 +74,6 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'アカウント登録',
           to: '/signup'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'チーム一覧',
-          to: '/teams'
         }
       ],
       miniVariant: false,

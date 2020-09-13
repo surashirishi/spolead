@@ -23,7 +23,7 @@ export const actions = {
       req.headers = {
         Authorization: localStorage.getItem('token')
       }
-      if (reqData.api === 'getCityApi') {
+      if (reqData.api === 'getCityApi' || reqData.api === 'getPrefApi') {
         req.headers['X-API-KEY'] = process.env.GET_CITY_APIKEY
       }
       console.log('request', req)
