@@ -93,5 +93,10 @@ export default {
         })
       }
     }
+  },
+
+  // env
+  env: {
+    GET_CITY_APIKEY: process.env.GET_CITY_APIKEY
   }
 }

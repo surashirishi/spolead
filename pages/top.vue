@@ -77,6 +77,9 @@ export default {
     registUserPage () {
       this.$router.push('/signup')
     },
+    loginPage () {
+      this.$router.push('/login')
+    },
     goTeamsPage (sportsId) {
       this.$router.push({ name: 'Teams', params: { sportsId } })
     },
