@@ -98,7 +98,6 @@ export default {
   },
   methods: {
     getTeams () {
-      console.log('getteams param = ', this.$route.params)
       let params = {}
       // get Teams related to sportsId
       if (localStorage.getItem('sportsId')) {
@@ -127,7 +126,8 @@ export default {
       this.$router.push('/login')
     },
     goTeamDetail (teamId) {
-      this.$router.push({ name: 'TeamDetails', params: { teamId } })
+      localStorage.setItem('teamId', teamId)
+      this.$router.push('TeamDetails')
     },
     showRegistTeamModal () {
       this.registTeamModal = true

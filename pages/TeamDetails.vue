@@ -201,7 +201,7 @@ export default {
       .dispatch('api/apiRequest', {
         api: 'teamShow',
         params: {
-          team_id: this.$route.params.teamId
+          team_id: localStorage.getItem('teamId')
         }
       }).then((res) => {
         console.log(res)
@@ -215,7 +215,7 @@ export default {
       .dispatch('api/apiRequest', {
         api: 'reviewIndex',
         params: {
-          team_id: this.$route.params.teamId
+          team_id: localStorage.getItem('teamId')
         }
       }).then((res) => {
         console.log(res)
