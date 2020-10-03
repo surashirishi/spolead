@@ -7,7 +7,7 @@
     <div class="page-header">
       チーム一覧
       <div class="page-header-title">
-        <SearchForm />
+        <SearchForm @execSearch="execSearch"/>
       </div>
       <common-button @click="showRegistTeamModal" button-color="primary">
         チームを登録する
@@ -134,6 +134,10 @@ export default {
     },
     closeModal () {
       this.registTeamModal = false
+    },
+    execSearch (searchWord) {
+      console.log('searching by', searchWord)
+      this.getTeams()
     }
   }
 }

@@ -3,8 +3,9 @@
     <!-- <label for="group_name">{{ label }}</label> -->
     <v-text-field
       label="検索(チーム名、都道府県、市区町村)"
+      v-model="searchWord"
     />
-    <common-button @click="execSearch" button-color="primary">
+    <common-button @click="execSearch(searchWord)" button-color="primary">
       検索
     </common-button>
   </div>
@@ -25,11 +26,12 @@ export default {
   },
   data () {
     return {
+      searchWord: ''
     }
   },
   methods: {
-    execSearch () {
-      console.log('searcj')
+    execSearch (searchWord) {
+      this.$emit('execSearch', searchWord)
     }
   }
 }
