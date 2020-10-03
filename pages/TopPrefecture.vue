@@ -205,6 +205,8 @@ export default {
     },
     showTeamsRelatedToCity (cityCode) {
       this.$router.push({ name: 'Teams', params: { cityCode } })
+      localStorage.setItem('sportsId', '')
+      localStorage.setItem('cityCode', cityCode)
     },
     goPrefectureMode (areaId) {
       console.log('areaId', areaId)

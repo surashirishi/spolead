@@ -82,6 +82,8 @@ export default {
     },
     goTeamsPage (sportsId) {
       this.$router.push({ name: 'Teams', params: { sportsId } })
+      localStorage.setItem('sportsId', sportsId)
+      localStorage.setItem('cityCode', '')
     },
     topPrefecture () {
       this.$router.push('/topPrefecture')

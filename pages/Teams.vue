@@ -101,14 +101,14 @@ export default {
       console.log('getteams param = ', this.$route.params)
       let params = {}
       // get Teams related to sportsId
-      if (this.$route.params.sportsId) {
+      if (localStorage.getItem('sportsId')) {
         params = {
-          sports_id: this.$route.params.sportsId
+          sports_id: localStorage.getItem('sportsId')
         }
       // get Teams related to cityCodes
-      } else if (this.$route.params.cityCode) {
+      } else {
         params = {
-          city_code: this.$route.params.cityCode
+          city_code: localStorage.getItem('cityCode')
         }
       }
 
