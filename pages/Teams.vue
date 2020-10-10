@@ -62,9 +62,10 @@
       </div>
       <v-divider :inset="false" />
     </v-flex>
-    <common-button button-size="large" button-color="primary" button-width="25vw">
+    <!-- <common-button button-size="large" button-color="primary" button-width="25vw">
       ユーザー登録
-    </common-button>
+    </common-button> -->
+    <!-- <Pagination /> -->
     <team-regist-modal :dialog="registTeamModal" @closeModal="closeModal" />
   </v-layout>
 </template>
@@ -74,12 +75,14 @@ import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
 import TeamRegistModal from '~/components/organisms/TeamRegistModal.vue'
 import SearchForm from '~/components/molecules/SearchForm.vue'
+// import Pagination from '~/components/molecules/Pagination.vue'
 
 export default {
   components: {
     CommonButton,
     SearchForm,
     TeamRegistModal
+    // Pagination
   },
   data () {
     return {
@@ -97,7 +100,7 @@ export default {
     this.getTeams()
   },
   methods: {
-    getTeams () {
+    getTeams (searchWord) {
       let params = {}
       // get Teams related to sportsId
       if (localStorage.getItem('sportsId')) {
@@ -110,6 +113,8 @@ export default {
           city_code: localStorage.getItem('cityCode')
         }
       }
+      params.search_word = searchWord
+      // params.page = page || 1
 
       this.$store
         .dispatch('api/apiRequest', {
@@ -137,7 +142,7 @@ export default {
     },
     execSearch (searchWord) {
       console.log('searching by', searchWord)
-      this.getTeams()
+      this.getTeams(searchWord)
     }
   }
 }
