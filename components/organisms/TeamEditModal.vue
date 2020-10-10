@@ -263,7 +263,7 @@ export default {
       })
     },
     closeModal () {
-      this.$emit('closeModal')
+      this.$emit('teamEdit')
     },
     selectPref (prefCode) {
       console.log('prefCode', prefCode)

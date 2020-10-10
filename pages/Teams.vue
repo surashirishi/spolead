@@ -52,8 +52,8 @@
             <div class="page-content-item-lists">
               最新の口コミ評価({{ getLatestReview(team.reviews) ? new Date(getLatestReview(team.reviews).updated_at).toLocaleString() : 'まだ口コミがありません' }})
             </div>
-            <div class="page-content-item-lists" v-if="getLatestReview(team.reviews)">
-              {{getLatestReview(team.reviews).general_post}}
+            <div v-if="getLatestReview(team.reviews)" class="page-content-item-lists">
+              {{ getLatestReview(team.reviews).general_post }}
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@
       ユーザー登録
     </common-button> -->
     <!-- <Pagination /> -->
-    <team-regist-modal :dialog="registTeamModal" @closeModal="closeModal" />
+    <team-regist-modal :dialog="registTeamModal" @registTeam="registTeam" />
   </v-layout>
 </template>
 
@@ -139,6 +139,10 @@ export default {
     },
     showRegistTeamModal () {
       this.registTeamModal = true
+    },
+    registTeam () {
+      this.getTeams()
+      this.closeModal()
     },
     closeModal () {
       this.registTeamModal = false

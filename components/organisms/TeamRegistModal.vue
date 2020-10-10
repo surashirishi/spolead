@@ -251,7 +251,7 @@ export default {
       })
     },
     closeModal () {
-      this.$emit('closeModal')
+      this.$emit('registTeam')
     },
     selectPref (prefCode) {
       console.log('prefCode', prefCode)

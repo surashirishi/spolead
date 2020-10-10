@@ -79,9 +79,9 @@
               </div>
             </div>
             <div class="page-content-item-footer">
-              <common-button @click="moveToReview" v-if="unreadReviewCount > 0" button-color="primary">
+              <!-- <common-button @click="moveToReview" v-if="unreadReviewCount > 0" button-color="primary">
                 口コミ情報（最新{{ unreadReviewCount }}件）
-              </common-button>
+              </common-button> -->
             </div>
           </v-tab-item>
           <v-tab-item>
@@ -127,11 +127,11 @@
       v-if="editTeamModal"
       :dialog="editTeamModal"
       :team="team"
-      @closeModal="closeModal"
+      @teamEdit="teamEdit"
     />
     <reviews-regist-modal
       :dialog="registReviewsModal"
-      @closeModal="closeModal"
+      @registReview="registReview"
       :teamId="team.id"
     />
   </v-layout>
@@ -197,34 +197,40 @@ export default {
   },
   created () {
     console.log('TeamDetailparams', this.$route.params)
-    this.$store
-      .dispatch('api/apiRequest', {
-        api: 'teamShow',
-        params: {
-          team_id: localStorage.getItem('teamId')
-        }
-      }).then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          this.team = res.data
-          console.log(this.team)
-          this.whichSports()
-        }
-      })
-    this.$store
-      .dispatch('api/apiRequest', {
-        api: 'reviewIndex',
-        params: {
-          team_id: localStorage.getItem('teamId')
-        }
-      }).then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          this.reviewsList = res.data
-        }
-      })
+    this.getTeamDetail()
+    this.getReviews()
   },
   methods: {
+    getTeamDetail () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'teamShow',
+          params: {
+            team_id: localStorage.getItem('teamId')
+          }
+        }).then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            this.team = res.data
+            console.log(this.team)
+            this.whichSports()
+          }
+        })
+    },
+    getReviews () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'reviewIndex',
+          params: {
+            team_id: localStorage.getItem('teamId')
+          }
+        }).then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            this.reviewsList = res.data
+          }
+        })
+    },
     changeTab (number) {
       if (number === 2 || number === 3) {
         this.showMoreInfo = false
@@ -240,6 +246,14 @@ export default {
     },
     showRegistReviewsModal () {
       this.registReviewsModal = true
+    },
+    registReview () {
+      this.getReviews()
+      this.closeModal()
+    },
+    teamEdit () {
+      this.getTeamDetail()
+      this.closeModal()
     },
     closeModal () {
       this.editTeamModal = false
