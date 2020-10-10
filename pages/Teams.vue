@@ -7,7 +7,7 @@
     <div class="page-header">
       チーム一覧
       <div class="page-header-title">
-        <SearchForm @execSearch="execSearch"/>
+        <SearchForm @execSearch="execSearch" />
       </div>
       <common-button @click="showRegistTeamModal" button-color="primary">
         チームを登録する
@@ -50,7 +50,10 @@
               ★★★★★ 5.0評価表示
             </div>
             <div class="page-content-item-lists">
-              口コミ評価[最新:createdate参照]
+              最新の口コミ評価({{ getLatestReview(team.reviews) ? new Date(getLatestReview(team.reviews).updated_at).toLocaleString() : 'まだ口コミがありません' }})
+            </div>
+            <div class="page-content-item-lists" v-if="getLatestReview(team.reviews)">
+              {{getLatestReview(team.reviews).general_post}}
             </div>
           </div>
         </div>
@@ -143,6 +146,22 @@ export default {
     execSearch (searchWord) {
       console.log('searching by', searchWord)
       this.getTeams(searchWord)
+    },
+    getLatestReview (reviews) {
+      let latestReviewDate = ''
+      let latestReview = ''
+      if (reviews.length > 0) {
+        reviews.forEach((review) => {
+          const updatedAt = new Date(review.updated_at)
+          latestReviewDate = updatedAt
+          latestReview = review
+          if (review.updated_at > latestReviewDate) {
+            latestReviewDate = updatedAt
+            latestReview = review
+          }
+        })
+      }
+      return latestReview === '' ? false : latestReview
     }
   }
 }
