@@ -23,35 +23,42 @@
               <v-card-title>
                 口コミ評価
               </v-card-title>
-              <v-card-subtitle>
+              <!-- <v-card-subtitle>
                 評価理由
-              </v-card-subtitle>
+              </v-card-subtitle> -->
               <v-card-text>
-                [総合]
+                総合：
+                <br />
                 {{ review.general_post }}
               </v-card-text>
               <v-card-text>
-                [チーム方針]
+                チーム方針：
+                <br />
                 {{ review.policy_post }}
               </v-card-text>
               <v-card-text>
-                [チーム体制]
+                チーム体制：
+                <br />
                 {{ review.organization_post }}
               </v-card-text>
               <v-card-text>
-                [活動内容]
+                活動内容：
+                <br />
                 {{ review.activity_post }}
               </v-card-text>
               <v-card-text>
-                [チーム環境]
+                チーム環境：
+                <br />
                 {{ review.environment_post }}
               </v-card-text>
               <v-card-text>
-                [イベント]
+                イベント：
+                <br />
                 {{ review.event_post }}
               </v-card-text>
               <v-card-text>
-                [費用]
+                費用：
+                <br />
                 {{ review.cost_post }}
               </v-card-text>
             </v-card>

@@ -9,17 +9,19 @@
         総合スポーツチーム口コミ情報サイト
       </div>
       <div class="page-header-title">
-        <common-button @click="topSports" button-size="large">
+        <common-button @click="topSports" button-size="large" button-color="primary">
           スポーツから探す
         </common-button>
-        <common-button @click="loginPage" button-size="large">
-          ログイン
+        <common-button @click="registUserPage" button-size="large" v-if="token === ''">
+          ユーザー登録する
         </common-button>
       </div>
     </div>
-    <div class="page-title">
-      SPOLEAD
-    </div>
+    <v-img
+      :src="require('~/assets/images/spolead-logo1.png')"
+      :width="200"
+      :aspect-ratio="16/13"
+    ></v-img>
 
     <!-- select AREA component -->
     <v-flex
@@ -96,12 +98,12 @@
         </v-card>
       </v-col>
     </v-flex>
-    <common-button @click="backMode" v-if="mode == 'prefecture' || 'city'" button-size="large">
+    <common-button @click="backMode" v-if="mode == 'prefecture' || mode == 'city'" button-size="large">
       戻る
     </common-button>
-    <common-button @click="registUserPage" v-else button-size="large">
+    <!-- <common-button @click="registUserPage" v-else button-size="large">
       ユーザー登録
-    </common-button>
+    </common-button> -->
   </v-layout>
 </template>
 

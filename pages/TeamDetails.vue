@@ -120,9 +120,12 @@
       </div>
       <v-divider :inset="false" />
     </v-flex>
-    <common-button v-if="showMoreInfo" @click="moveToReview" button-size="large" button-color="primary" button-width="25vw">
-      口コミをもっと見る
+    <common-button @click="$router.push('/Teams')">
+      戻る
     </common-button>
+    <!-- <common-button v-if="showMoreInfo" @click="moveToReview" button-size="large" button-color="primary" button-width="25vw">
+      口コミをもっと見る
+    </common-button> -->
     <team-edit-modal
       v-if="editTeamModal"
       :dialog="editTeamModal"

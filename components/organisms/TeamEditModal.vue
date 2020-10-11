@@ -180,7 +180,8 @@ export default {
           { targetAgeType: 'キッズ', ageId: 1 },
           { targetAgeType: '小学生', ageId: 2 },
           { targetAgeType: '中学生', ageId: 3 },
-          { targetAgeType: '大学生', ageId: 4 },
+          { targetAgeType: '高校生', ageId: 4 },
+          { targetAgeType: '大学生', ageId: 5 },
       ]
     }
   },
@@ -248,6 +249,7 @@ export default {
         fr.addEventListener('load', () => {
           this.team_image = fr.result
         })
+        console.log('file', file)
       } else {
         this.team_image = ''
       }

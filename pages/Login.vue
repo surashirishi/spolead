@@ -6,7 +6,7 @@
   >
     <div class="page-header">
       <div class="page-header-title">
-        <common-button @click="goSignupPage" :button-color="colors.suggestion" button-size="large">
+        <common-button @click="goSignupPage" button-color="primary" button-size="large">
           アカウントの新規作成
         </common-button>
       </div>

@@ -6,8 +6,8 @@
   >
     <div class="page-header">
       <div class="page-header-title">
-        <common-button @click="goLoginPage" :button-color="colors.suggestion" button-size="large">
-          アカウントをお持ちですか？
+        <common-button @click="goLoginPage" button-color="primary" button-size="large">
+          既にアカウントをお持ちですか？
         </common-button>
       </div>
     </div>

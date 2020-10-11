@@ -9,17 +9,19 @@
         総合スポーツチーム口コミ情報サイト
       </div>
       <div class="page-header-title">
-        <common-button @click="topPrefecture" button-size="large">
+        <common-button @click="topPrefecture" button-size="large" button-color="primary">
           エリアから探す
         </common-button>
-        <common-button @click="loginPage" button-size="large">
-          ログイン
+        <common-button @click="registUserPage" button-size="large" v-if="token === ''">
+          ユーザー登録する
         </common-button>
       </div>
     </div>
-    <div class="page-title">
-      SPOLEAD
-    </div>
+    <v-img
+      :src="require('~/assets/images/spolead-logo1.png')"
+      :width="200"
+      :aspect-ratio="16/13"
+    ></v-img>
     <v-flex
       xs12
       sm8
@@ -47,9 +49,9 @@
         </v-card>
       </v-col>
     </v-flex>
-    <common-button @click="registUserPage" button-size="large">
+    <!-- <common-button @click="registUserPage" button-size="large" >
       ユーザー登録
-    </common-button>
+    </common-button> -->
   </v-layout>
 </template>
 
@@ -62,6 +64,7 @@ export default {
   },
   data () {
     return {
+      token: '',
       cards: [
         { id: 1, title: 'Soccer', src: require('~/assets/images/soccer.jpg'), flex: 3 },
         { id: 2, title: 'Baseball', src: require('~/assets/images/baseball.jpg'), flex: 3 },
@@ -72,6 +75,9 @@ export default {
         { id: 7, title: 'Swimming', src: require('~/assets/images/swimming.jpeg'), flex: 3 }
       ]
     }
+  },
+  created () {
+    this.token = localStorage.getItem('token')
   },
   methods: {
     registUserPage () {
