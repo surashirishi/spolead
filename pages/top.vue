@@ -19,6 +19,11 @@
     </div>
     <div class="page-title">
       SPOLEAD
+      <!-- <v-img
+        :src="require('~/assets/images/spolead-logo1.png')"
+        :width="300"
+        :aspect-ratio="16/9"
+      ></v-img> -->
     </div>
     <v-flex
       xs12

@@ -47,7 +47,7 @@
               {{ team.team_information }}
             </div>
             <div class="page-content-item-lists">
-              ★★★★★ 5.0評価表示
+              <v-rating v-model="team.average_point" v-if="team.average_point" readonly />
             </div>
             <div class="page-content-item-lists">
               最新の口コミ評価({{ getLatestReview(team.reviews) ? new Date(getLatestReview(team.reviews).updated_at).toLocaleString() : 'まだ口コミがありません' }})
