@@ -23,8 +23,9 @@
       class="page-content"
     >
       <div class="page-content-item">
-        <div class="page-content-item-header">
+        <div class="page-content-item-header" style="display">
           {{ team.name }} ({{ team.prefecture }}{{ team.city }}{{ team.street_number }})
+          <!-- <v-rating v-model="team.average_point" v-if="team.average_point" readonly /> -->
         </div>
         <div class="page-content-item-main">
           <div class="page-content-item-list">
@@ -44,15 +45,19 @@
           </div>
           <div class="page-content-item-list">
             <div class="page-content-item-lists">
-              {{ team.team_information }}
-            </div>
-            <div class="page-content-item-lists">
+              <span class="text--lighten-2 mr-1">
+                ({{ team.average_point }})
+              </span>
               <v-rating v-model="team.average_point" v-if="team.average_point" readonly />
             </div>
             <div class="page-content-item-lists">
+              {{ team.team_information }}
+            </div>
+            <v-divider :inset="false" class="inner-divider"/>
+            <div class="page-content-item-lists grey--text">
               最新の口コミ評価({{ getLatestReview(team.reviews) ? new Date(getLatestReview(team.reviews).updated_at).toLocaleString() : 'まだ口コミがありません' }})
             </div>
-            <div v-if="getLatestReview(team.reviews)" class="page-content-item-lists">
+            <div v-if="getLatestReview(team.reviews)" class="page-content-item-lists mx-6">
               {{ getLatestReview(team.reviews).general_post }}
             </div>
           </div>
@@ -184,6 +189,13 @@ export default {
   &-item {
     &-footer {
       justify-content: flex-end;
+    }
+    .page-content-item-lists {
+      display: flex;
+      align-items: center;
+    }
+    .inner-divider {
+      margin: 0px 12px;
     }
   }
 }

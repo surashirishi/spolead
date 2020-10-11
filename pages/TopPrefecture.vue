@@ -18,9 +18,9 @@
       </div>
     </div>
     <v-img
-      :src="require('~/assets/images/spolead-logo1.png')"
-      :width="200"
-      :aspect-ratio="16/13"
+      :src="require('~/assets/images/spolead-logo3.png')"
+      :width="250"
+      :aspect-ratio="16/6"
     ></v-img>
 
     <!-- select AREA component -->
@@ -116,6 +116,7 @@ export default {
   },
   data () {
     return {
+      token: '',
       mode: 'area',
       cards: [
         // { id: 1, title: '北海道', src: require('~/assets/images/prefecture/hokkaidou.gif'), flex: 3 },
@@ -280,14 +281,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/page.scss';
+
 .page-header {
-  width: 100%;
-  height: 10vh;
-  margin: 16px;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include top-page-header
 }
 .page-title {
   width: 100%;
@@ -297,13 +294,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.common-button {
-
-}
 .page-content {
-  margin: 32px;
-  .sports {
-    cursor: pointer;
-  }
+  @include top-page-content
 }
 </style>

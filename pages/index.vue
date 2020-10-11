@@ -18,9 +18,9 @@
       </div>
     </div>
     <v-img
-      :src="require('~/assets/images/spolead-logo1.png')"
-      :width="200"
-      :aspect-ratio="16/13"
+      :src="require('~/assets/images/spolead-logo3.png')"
+      :width="250"
+      :aspect-ratio="16/6"
     ></v-img>
     <v-flex
       xs12
@@ -99,14 +99,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/page.scss';
+
 .page-header {
-  width: 100%;
-  height: 10vh;
-  margin: 16px;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include top-page-header
 }
 .page-title {
   width: 100%;

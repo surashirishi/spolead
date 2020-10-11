@@ -71,7 +71,7 @@
                 <v-container>
                   <v-row justify="space-between">
                     <v-col cols="auto">
-                      <h1>チームトップ情報</h1>
+                      <!-- <div class="grey--text">チームトップ情報</div> -->
                       <p>{{ team.team_information }}</p>
                     </v-col>
                   </v-row>
