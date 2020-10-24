@@ -78,9 +78,9 @@ export default {
   },
   created () {
     this.token = localStorage.getItem('token')
-    if (!this.token) {
-      this.$router.push('/login')
-    }
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
   },
   methods: {
     registUserPage () {

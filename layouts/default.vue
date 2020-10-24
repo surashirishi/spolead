@@ -6,8 +6,15 @@
       :clipped="clipped"
       fixed
       app
-      v-if="token"
     >
+    <!-- <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      fixed
+      app
+      v-if="token"
+    > -->
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -30,7 +37,8 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="token" />
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="token" /> -->
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" @click="$router.push('/top')" style="cursor: pointer" />
       <v-spacer />
     </v-app-bar>
@@ -52,9 +60,9 @@
 export default {
   created () {
     this.token = localStorage.getItem('token')
-    if (!this.token) {
-      this.$router.push('/login')
-    }
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
   },
   data () {
     return {
