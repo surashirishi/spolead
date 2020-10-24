@@ -6,6 +6,7 @@
       :clipped="clipped"
       fixed
       app
+      v-if="token"
     >
       <v-list>
         <v-list-item
@@ -29,7 +30,7 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="token" />
       <v-toolbar-title v-text="title" @click="$router.push('/top')" style="cursor: pointer" />
       <v-spacer />
     </v-app-bar>
@@ -49,8 +50,15 @@
 
 <script>
 export default {
+  created () {
+    this.token = localStorage.getItem('token')
+    if (!this.token) {
+      this.$router.push('/login')
+    }
+  },
   data () {
     return {
+      token: '',
       clipped: false,
       drawer: false,
       fixed: false,

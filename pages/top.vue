@@ -12,7 +12,7 @@
         <common-button @click="topPrefecture" button-size="large" button-color="primary">
           エリアから探す
         </common-button>
-        <common-button @click="registUserPage" button-size="large" v-if="token === ''">
+        <common-button @click="registUserPage" v-if="token === ''" button-size="large">
           ユーザー登録する
         </common-button>
       </div>
@@ -21,7 +21,7 @@
       :src="require('~/assets/images/spolead-logo3.png')"
       :width="250"
       :aspect-ratio="16/6"
-    ></v-img>
+    />
     <v-flex
       xs12
       sm8
@@ -78,6 +78,9 @@ export default {
   },
   created () {
     this.token = localStorage.getItem('token')
+    if (!this.token) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     registUserPage () {
