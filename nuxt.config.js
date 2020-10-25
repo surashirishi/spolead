@@ -98,6 +98,7 @@ export default {
 
   // env
   env: {
-    GET_CITY_APIKEY: process.env.GET_CITY_APIKEY
+    GET_CITY_APIKEY: process.env.GET_CITY_APIKEY,
+    FOUNDATION: process.env.FOUNDATION
   }
 }
