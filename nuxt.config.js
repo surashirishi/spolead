@@ -25,6 +25,7 @@ export default {
   ** Global CSS
   */
   css: [
+    { src: '~assets/scss/style.scss' }
   ],
   /*
   ** Plugins to load before mounting the App
@@ -52,6 +53,9 @@ export default {
   */
   axios: {
   },
+  server: {
+    port: 8000, // デフォルト: 3000
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -59,7 +63,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      // dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -81,6 +85,20 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      if (process.server && process.browser) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
     }
+  },
+
+  // env
+  env: {
+    GET_CITY_APIKEY: process.env.GET_CITY_APIKEY,
+    FOUNDATION: process.env.FOUNDATION
   }
 }

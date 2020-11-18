@@ -7,6 +7,14 @@
       fixed
       app
     >
+    <!-- <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      fixed
+      app
+      v-if="token"
+    > -->
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -29,89 +37,82 @@
       fixed
       app
     >
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="token" /> -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        @click.stop="miniVariant = !miniVariant"
-        icon
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        @click.stop="clipped = !clipped"
-        icon
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        @click.stop="fixed = !fixed"
-        icon
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="title" @click="$router.push('/top')" style="cursor: pointer" />
       <v-spacer />
-      <v-btn
-        @click.stop="rightDrawer = !rightDrawer"
-        icon
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer
       :fixed="fixed"
       app
     >
-      <span>&copy; 2019</span>
+      <span>&copy; 2020 {{ nowYear }}</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
+  created () {
+    this.token = localStorage.getItem('token')
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
+  },
   data () {
     return {
+      token: '',
       clipped: false,
       drawer: false,
       fixed: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          title: 'スポーツ一覧',
+          to: '/top'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'エリアから探す',
+          to: '/topPrefecture'
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'ログイン',
+          to: '/login'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'アカウント登録',
+          to: '/signup'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: '総合スポーツチーム口コミ情報サイト​ - SPOLEAD'
+    }
+  },
+  computed: {
+    nowYear () {
+      const year = new Date()
+      const nowYear = year.getFullYear()
+      if (nowYear > 2020) {
+        return `~ ${nowYear}`
+      } else {
+        return ''
+      }
     }
   }
 }
 </script>
+<style lang="scss">
+#app{
+  font-family: 'spolead';
+}
+</style>
