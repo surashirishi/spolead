@@ -174,7 +174,7 @@ export default {
   },
   computed: {
     googleMap () {
-      return `http://maps.google.co.jp/maps?q=${this.team.prefecture + this.team.city + this.team.street_number}&output=embed&t=m&z=16&hl=ja`
+      return `https://maps.google.co.jp/maps?q=${this.team.prefecture + this.team.city + this.team.street_number}&output=embed&t=m&z=16&hl=ja`
     },
     unreadReviewCount () {
       const loginDateTime = new Date(localStorage.getItem('loginDateTime'))
