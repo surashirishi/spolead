@@ -36,6 +36,7 @@
         <!-- user@example.com -->
         <v-text-field
           v-model="password"
+          :rules="passwordRules"
           label="パスワード"
           required
         />
@@ -45,6 +46,9 @@
     <common-button @click="login" button-size="large" button-color="primary" button-width="25vw">
       ログイン
     </common-button>
+    <v-alert v-if="invalidAuth" type="error">
+      認証情報が正しくありません。
+    </v-alert>
   </v-layout>
 </template>
 
@@ -62,40 +66,47 @@ export default {
       valid: true,
       email: '',
       password: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
-      ],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-      ]
+        v => !!v || 'Emailは必須項目です。',
+        v => /.+@.+\..+/.test(v) || 'Emailの形式が正しくありません。'
+      ],
+      passwordRules: [
+        v => (v && v.length >= 5) || 'パスワードは6文字以上です。'
+      ],
+      invalidAuth: false
     }
   },
   methods: {
     login () {
       console.log('store', this.$store)
-      this.$store
-        .dispatch('api/apiRequest', {
-          api: 'login',
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        }).then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem('token', res.data.access_token)
-            localStorage.setItem('loginDateTime', new Date())
-            this.$router.push('/top')
-            console.log('token →', res.data.access_token)
-          }
-        })
+      console.log('validate', this.validate())
+      if (this.validate()) {
+        console.log('aaa')
+        this.$store
+          .dispatch('api/apiRequest', {
+            api: 'login',
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          }).then((res) => {
+            if (res.status === 200) {
+              localStorage.setItem('token', res.data.access_token)
+              localStorage.setItem('loginDateTime', new Date())
+              this.$router.push('/top')
+              console.log('token →', res.data.access_token)
+            }
+          }).catch((err) => {
+            console.log('ERROR', err)
+            this.invalidAuth = true
+          })
+      }
     },
     goSignupPage () {
       this.$router.push('/signup')
     },
     validate () {
-      this.$refs.form.validate()
+      return this.$refs.form.validate()
     },
     reset () {
       this.$refs.form.reset()
@@ -128,5 +139,8 @@ export default {
 }
 .v-input {
   width: 25vw;
+}
+.v-alert {
+  margin: 32px;
 }
 </style>

@@ -42,12 +42,13 @@
         />
         <v-text-field
           v-model="password"
-          label="パスワード"
           :rules="passwordRules"
+          label="パスワード"
           required
         />
         <v-text-field
           v-model="passwordConfirm"
+          :rules="passwordConfirmRules"
           label="パスワード（確認）"
           required
         />
@@ -85,6 +86,9 @@ export default {
       ],
       passwordRules: [
         v => (v && v.length >= 5) || 'パスワードは6文字以上に設定してください。'
+      ],
+      passwordConfirmRules: [
+        v => (v === this.password) || 'パスワードが一致しません。'
       ]
     }
   },
@@ -93,7 +97,7 @@ export default {
       this.$router.push('/login')
     },
     validate () {
-      this.$refs.form.validate()
+      return this.$refs.form.validate()
     },
     reset () {
       this.$refs.form.reset()
@@ -102,22 +106,24 @@ export default {
       this.$refs.form.resetValidation()
     },
     signUp () {
-      this.$store
-        .dispatch('api/apiRequest', {
-          api: 'signup',
-          data: {
-            nickname: this.nickname,
-            email: this.email,
-            password: this.password
-          }
-        }).then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem('token', res.data.access_token)
-            localStorage.setItem('loginDateTime', new Date())
-            this.$router.push('/top')
-            console.log('token →', res.data.access_token)
-          }
-        })
+      if (this.validate()) {
+        this.$store
+          .dispatch('api/apiRequest', {
+            api: 'signup',
+            data: {
+              nickname: this.nickname,
+              email: this.email,
+              password: this.password
+            }
+          }).then((res) => {
+            if (res.status === 200) {
+              localStorage.setItem('token', res.data.access_token)
+              localStorage.setItem('loginDateTime', new Date())
+              this.$router.push('/top')
+              console.log('token →', res.data.access_token)
+            }
+          })
+      }
     }
   }
 }
