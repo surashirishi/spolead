@@ -13,7 +13,7 @@
                 <v-select
                   v-model="gender_id"
                   :items="genderTypeList"
-                  label="あなたの性別"
+                  label="性別"
                   item-text="gender"
                   item-value="genderId"
                   required
@@ -22,7 +22,7 @@
               <v-col cols="12" sm="6">
                 <v-select
                   :items="['2015〜2020', '2010〜2014', '2005〜2009', '2000〜2004', 'それ以前']"
-                  label="あなたの在籍年"
+                  label="在籍年"
                 />
               </v-col>
               <v-col cols="12">
@@ -31,7 +31,7 @@
                   :items="ageGroupList"
                   item-text="AgeGroupType"
                   item-value="AgeGroupId"
-                  label="あなたの年代"
+                  label="カテゴリ"
                 />
               </v-col>
               <v-col cols="12">
@@ -202,8 +202,9 @@ export default {
         { AgeGroupType: 'キッズ', AgeGroupId: 1 },
         { AgeGroupType: '小学生', AgeGroupId: 2 },
         { AgeGroupType: '中学生', AgeGroupId: 3 },
-        { AgeGroupType: '大学生', AgeGroupId: 4 },
-        { AgeGroupType: '社会人', AgeGroupId: 5 }
+        { AgeGroupType: '高校生', AgeGroupId: 4 },
+        { AgeGroupType: '大学生', AgeGroupId: 5 },
+        { AgeGroupType: '社会人', AgeGroupId: 6 }
       ],
       playerFlagList: [
         { playerType: 'プレーヤー', playerFlag: 1 },
