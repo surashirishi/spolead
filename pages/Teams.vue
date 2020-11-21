@@ -44,11 +44,11 @@
             </v-card>
           </div>
           <div class="page-content-item-list">
-            <div class="page-content-item-lists">
+            <div class="page-content-item-lists" v-if="team.average_point">
               <span class="text--lighten-2 mr-1">
                 ({{ team.average_point }})
               </span>
-              <v-rating v-model="team.average_point" v-if="team.average_point" readonly />
+              <v-rating v-model="team.average_point" readonly />
             </div>
             <div class="page-content-item-lists">
               {{ team.team_information }}
