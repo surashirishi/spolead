@@ -9,7 +9,7 @@
       <div class="page-header-title">
         <SearchForm @execSearch="execSearch" />
       </div>
-      <common-button @click="showRegistTeamModal" button-color="primary">
+      <common-button @click="showRegistTeamModal" button-color="primary" v-if="isLogin">
         チームを登録する
       </common-button>
     </div>
@@ -102,6 +102,11 @@ export default {
       passwordConfirm: '',
       registTeamModal: false,
       teams: []
+    }
+  },
+  computed: {
+    isLogin () {
+      return !!localStorage.getItem('userId')
     }
   },
   created () {

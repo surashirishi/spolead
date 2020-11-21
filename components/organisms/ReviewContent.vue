@@ -106,7 +106,7 @@ export default {
       return this.userName !== '' ? this.userName : '匿名'
     },
     displayGender () {
-      return this.review.gender !== null ? this.genderTypeMap[this.review.gender - 1] : '非公開'
+      return this.review.gender !== null ? this.genderTypeList[this.review.gender - 1] : '非公開'
     },
     displayAgeGroup () {
       return this.review.age_group !== null ? this.ageGroupMap[this.review.age_group - 1] : '非公開'

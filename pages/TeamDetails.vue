@@ -12,7 +12,7 @@
         <common-button @click="showRegistReviewsModal" button-color="primary">
           口コミ投稿する
         </common-button>
-        <common-button @click="showEditTeamModal" button-color="primary">
+        <common-button @click="showEditTeamModal" v-if="isTeamOwner" button-color="primary">
           チーム編集
         </common-button>
       </div>
@@ -188,6 +188,12 @@ export default {
         }
       })
       return unreadCount
+    },
+    isTeamOwner () {
+      // TODO: need to get from access_token
+      console.log('teams user_id', this.team.user_id)
+      console.log('storage user_id', localStorage.getItem('userId'))
+      return String(this.team.user_id) === localStorage.getItem('userId')
     }
     // computed avarage point but unnecessary this point.
     // avarageGeneralReviewPoint () {
