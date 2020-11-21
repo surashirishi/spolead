@@ -218,7 +218,8 @@ export default {
             sports_id: this.sports_id,
             team_type: this.team_type,
             target_age_type: this.target_age_type,
-            team_information: this.team_information
+            team_information: this.team_information,
+            user_id: localStorage.getItem('userId')
           }
         })
         .then((response) => {
