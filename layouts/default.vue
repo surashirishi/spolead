@@ -45,7 +45,7 @@
         ログアウト
       </common-button>
       <common-button @click="$router.push('/login')" v-else button-color="primary">
-        ログイン
+        チームを登録するにはログインが必要です
       </common-button>
     </v-app-bar>
     <v-content>
