@@ -29,7 +29,7 @@
       >
         <v-text-field
           v-model="nickname"
-          :counter="10"
+          :counter="30"
           :rules="nameRules"
           label="ニックネーム"
           required
@@ -43,6 +43,7 @@
         <v-text-field
           v-model="password"
           label="パスワード"
+          :rules="passwordRules"
           required
         />
         <v-text-field
@@ -52,7 +53,7 @@
         />
       </v-form>
     </v-flex>
-    <common-button button-size="large" button-color="primary" button-width="25vw">
+    <common-button @click="signUp" button-size="large" button-color="primary" button-width="25vw">
       ユーザー登録
     </common-button>
   </v-layout>
@@ -75,12 +76,15 @@ export default {
       password: '',
       passwordConfirm: '',
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+        v => !!v || 'ニックネームは必須項目です。',
+        v => (v && v.length <= 30) || 'ニックネームは30文字が上限です。'
       ],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        v => !!v || 'Emailは必須項目です。',
+        v => /.+@.+\..+/.test(v) || 'Emailの形式が正しくありません。'
+      ],
+      passwordRules: [
+        v => (v && v.length >= 5) || 'パスワードは6文字以上に設定してください。'
       ]
     }
   },
@@ -96,6 +100,24 @@ export default {
     },
     resetValidation () {
       this.$refs.form.resetValidation()
+    },
+    signUp () {
+      this.$store
+        .dispatch('api/apiRequest', {
+          api: 'signup',
+          data: {
+            nickname: this.nickname,
+            email: this.email,
+            password: this.password
+          }
+        }).then((res) => {
+          if (res.status === 200) {
+            localStorage.setItem('token', res.data.access_token)
+            localStorage.setItem('loginDateTime', new Date())
+            this.$router.push('/top')
+            console.log('token →', res.data.access_token)
+          }
+        })
     }
   }
 }

@@ -16,6 +16,11 @@ export default {
     method: 'get'
   },
 
+  // アカウント登録
+  signup: {
+    url: foundation + '/users',
+    method: 'post'
+  },
   // ユーザーログイン
   login: {
     url: foundation + '/login',
