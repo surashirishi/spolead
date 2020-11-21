@@ -81,7 +81,6 @@ export default {
       console.log('store', this.$store)
       console.log('validate', this.validate())
       if (this.validate()) {
-        console.log('aaa')
         this.$store
           .dispatch('api/apiRequest', {
             api: 'login',
@@ -94,8 +93,9 @@ export default {
               localStorage.setItem('token', res.data.access_token)
               localStorage.setItem('userId', res.data.user_id)
               localStorage.setItem('loginDateTime', new Date())
-              this.$router.push('/top')
               console.log('token →', res.data.access_token)
+              // location.replace('http://localhost:8000/top')
+              location.replace('https://spolead.com/top')
             }
           }).catch((err) => {
             console.log('ERROR', err)

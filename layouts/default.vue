@@ -7,7 +7,7 @@
       fixed
       app
     >
-    <!-- <v-navigation-drawer
+      <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -41,6 +41,12 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" @click="$router.push('/top')" style="cursor: pointer" />
       <v-spacer />
+      <common-button @click="logOut" v-if="!!token" button-color="warning">
+        ログアウト
+      </common-button>
+      <common-button @click="$router.push('/login')" v-else button-color="primary">
+        ログイン
+      </common-button>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -57,12 +63,10 @@
 </template>
 
 <script>
+import CommonButton from '~/components/atoms/CommonButton.vue'
 export default {
-  created () {
-    this.token = localStorage.getItem('token')
-    // if (!this.token) {
-    //   this.$router.push('/login')
-    // }
+  components: {
+    CommonButton
   },
   data () {
     return {
@@ -70,6 +74,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      isLogin: localStorage,
       items: [
         {
           icon: 'mdi-apps',
@@ -108,11 +113,47 @@ export default {
         return ''
       }
     }
+  },
+  created () {
+    this.token = localStorage.getItem('token')
+    // if (!this.token) {
+    //   this.$router.push('/login')
+    // }
+  },
+  methods: {
+    logOut () {
+      // only remove localStorage
+
+      // this.$store
+      //   .dispatch('api/apiRequest', {
+      //     api: 'login',
+      //     data: {
+      //       email: this.email,
+      //       password: this.password
+      //     }
+      //   }).then((res) => {
+      //     if (res.status === 200) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('loginDateTime')
+      this.$router.push('/top')
+      // location.replace('http://localhost:8000/top')
+      location.replace('https://spolead.com/top')
+      //   }
+      // }).catch((err) => {
+      //   console.log('ERROR', err)
+      // })
+    }
   }
 }
 </script>
 <style lang="scss">
 #app{
   font-family: 'spolead';
+}
+.v-toolbar__content {
+  .common-button {
+    margin-right: 20px;
+  }
 }
 </style>

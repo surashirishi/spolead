@@ -26,6 +26,11 @@ export default {
     url: foundation + '/login',
     method: 'post'
   },
+  // ユーザーログアウト
+  logout: {
+    url: foundation + '/logout',
+    method: 'delete'
+  },
   // チーム一覧
   teamIndex: {
     url: foundation + '/teams',
