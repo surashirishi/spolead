@@ -55,9 +55,32 @@
     </v-content>
     <v-footer
       :fixed="fixed"
+      color="primary lighten-1"
+      padless
       app
     >
-      <span>&copy; 2020 {{ nowYear }}</span>
+      <v-row
+        justify="center"
+        no-gutters
+      >
+        <v-btn
+          v-for="(link,i) in footerLinks"
+          :key="i"
+          :to="link.to"
+          color="white"
+          text
+          rounded
+          class="my-2"
+        >
+          {{ link.title }}
+        </v-btn>
+        <v-col
+          class="primary lighten-2 py-4 text-center white--text"
+          cols="12"
+        >
+          <span>&copy; Spolead.All rights reserved 2020 {{ nowYear }}</span>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -95,6 +118,24 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'アカウント登録',
           to: '/signup'
+        }
+      ],
+      footerLinks: [
+        {
+          title: 'ホーム',
+          to: '/top'
+        },
+        {
+          title: 'お問い合わせ',
+          to: '/ContactForm'
+        },
+        {
+          title: '利用規約',
+          to: '/TermOfService'
+        },
+        {
+          title: '運営管理',
+          to: '/MasterInformation'
         }
       ],
       miniVariant: false,
