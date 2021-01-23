@@ -102,6 +102,7 @@ export default {
       passwordConfirm: '',
       registTeamModal: false,
       teams: [],
+      searchWord: '',
       page: 1,
       totalPages: 1
     }
@@ -115,7 +116,7 @@ export default {
     this.getTeams()
   },
   methods: {
-    getTeams (searchWord) {
+    getTeams () {
       let params = {}
       // get Teams related to sportsId
       if (localStorage.getItem('sportsId')) {
@@ -129,7 +130,7 @@ export default {
         }
       }
 
-      params.search_word = searchWord
+      params.search_word = this.searchWord
       params.page = this.page
 
       this.$store
@@ -164,12 +165,13 @@ export default {
     },
     execSearch (searchWord) {
       console.log('searching by', searchWord)
-      this.getTeams(searchWord)
+      this.searchWord = searchWord
+      this.page = 1
+      this.getTeams()
     },
     getLatestReview (reviews) {
       let latestReviewDate = ''
       let latestReview = ''
-      console.log('reviews', reviews)
       if (reviews) {
         if (reviews.length > 0) {
           reviews.forEach((review) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <v-pagination
-      v-model="page"
+      v-model="internalPage"
       :length="totalPages"
       @input="execPagination"
       :total-visible="7"
@@ -18,16 +18,25 @@ export default {
     },
     totalPages: {
       type: Number,
-      default: 1
+      default: 15
     }
   },
   data () {
     return {
+      internalPage: 1
+    }
+  },
+  watch: {
+    page: {
+      immediate: true,
+      handler (value) {
+        this.internalPage = value
+      }
     }
   },
   methods: {
-    execPagination (page) {
-      this.$emit('execPagination', page)
+    execPagination (internalPage) {
+      this.$emit('execPagination', internalPage)
     }
   }
 }
