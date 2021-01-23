@@ -4,6 +4,7 @@
       v-model="page"
       :length="totalPages"
       @input="execPagination"
+      :total-visible="7"
     />
   </div>
 </template>
