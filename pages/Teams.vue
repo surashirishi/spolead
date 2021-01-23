@@ -104,7 +104,7 @@ export default {
       teams: [],
       searchWord: '',
       page: 1,
-      totalPages: 1
+      totalPages: 15
     }
   },
   computed: {
