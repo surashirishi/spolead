@@ -2,17 +2,31 @@
   <div class="text-center">
     <v-pagination
       v-model="page"
-      :length="6"
+      :length="totalPages"
+      @input="execPagination"
     />
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    page: {
+      type: Number,
+      default: 1
+    },
+    totalPages: {
+      type: Number,
+      default: 1
+    }
+  },
   data () {
     return {
-      page: 1,
-      length: 6
+    }
+  },
+  methods: {
+    execPagination (page) {
+      this.$emit('execPagination', page)
     }
   }
 }

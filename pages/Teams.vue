@@ -9,7 +9,7 @@
       <div class="page-header-title">
         <SearchForm @execSearch="execSearch" />
       </div>
-      <common-button @click="showRegistTeamModal" button-color="primary" v-if="isLogin">
+      <common-button @click="showRegistTeamModal" v-if="isLogin" button-color="primary">
         チームを登録する
       </common-button>
     </div>
@@ -44,7 +44,7 @@
             </v-card>
           </div>
           <div class="page-content-item-list">
-            <div class="page-content-item-lists" v-if="team.average_point">
+            <div v-if="team.average_point" class="page-content-item-lists">
               <span class="text--lighten-2 mr-1">
                 ({{ team.average_point }})
               </span>
@@ -53,7 +53,7 @@
             <div class="page-content-item-lists">
               {{ team.team_information }}
             </div>
-            <v-divider :inset="false" class="inner-divider"/>
+            <v-divider :inset="false" class="inner-divider" />
             <div class="page-content-item-lists grey--text">
               最新の口コミ評価({{ getLatestReview(team.reviews) ? new Date(getLatestReview(team.reviews).updated_at).toLocaleString() : 'まだ口コミがありません' }})
             </div>
@@ -73,7 +73,7 @@
     <!-- <common-button button-size="large" button-color="primary" button-width="25vw">
       ユーザー登録
     </common-button> -->
-    <!-- <Pagination /> -->
+    <Pagination @execPagination="execPagination" :totalPages="totalPages" :page="page" />
     <team-regist-modal :dialog="registTeamModal" @registTeam="registTeam" />
   </v-layout>
 </template>
@@ -83,14 +83,14 @@ import { colors } from '~/assets/js/Colors.js'
 import CommonButton from '~/components/atoms/CommonButton.vue'
 import TeamRegistModal from '~/components/organisms/TeamRegistModal.vue'
 import SearchForm from '~/components/molecules/SearchForm.vue'
-// import Pagination from '~/components/molecules/Pagination.vue'
+import Pagination from '~/components/molecules/Pagination.vue'
 
 export default {
   components: {
     CommonButton,
     SearchForm,
-    TeamRegistModal
-    // Pagination
+    TeamRegistModal,
+    Pagination
   },
   data () {
     return {
@@ -101,7 +101,9 @@ export default {
       password: '',
       passwordConfirm: '',
       registTeamModal: false,
-      teams: []
+      teams: [],
+      page: 1,
+      totalPages: 1
     }
   },
   computed: {
@@ -126,8 +128,9 @@ export default {
           city_code: localStorage.getItem('cityCode')
         }
       }
+
       params.search_word = searchWord
-      // params.page = page || 1
+      params.page = this.page
 
       this.$store
         .dispatch('api/apiRequest', {
@@ -135,8 +138,10 @@ export default {
           params
         }).then((res) => {
           if (res.status === 200) {
-            this.teams = res.data
+            this.teams = res.data.teams
+            this.totalPages = res.data.total_pages
             console.log('this.teams  ', this.teams)
+            console.log('this.total_pages  ', this.totalPages)
           }
         })
     },
@@ -164,18 +169,25 @@ export default {
     getLatestReview (reviews) {
       let latestReviewDate = ''
       let latestReview = ''
-      if (reviews.length > 0) {
-        reviews.forEach((review) => {
-          const updatedAt = new Date(review.updated_at)
-          latestReviewDate = updatedAt
-          latestReview = review
-          if (review.updated_at > latestReviewDate) {
+      console.log('reviews', reviews)
+      if (reviews) {
+        if (reviews.length > 0) {
+          reviews.forEach((review) => {
+            const updatedAt = new Date(review.updated_at)
             latestReviewDate = updatedAt
             latestReview = review
-          }
-        })
+            if (review.updated_at > latestReviewDate) {
+              latestReviewDate = updatedAt
+              latestReview = review
+            }
+          })
+        }
       }
       return latestReview === '' ? false : latestReview
+    },
+    execPagination (page) {
+      this.page = page
+      this.getTeams()
     }
   }
 }
