@@ -39,7 +39,7 @@
     >
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="token" /> -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" @click="$router.push('/top')" style="cursor: pointer" />
+      <v-toolbar-title v-text="title" @click="$router.push('/')" style="cursor: pointer" />
       <v-spacer />
       <common-button @click="logOut" v-if="!!token" button-color="warning">
         ログアウト
@@ -102,7 +102,7 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'スポーツ一覧',
-          to: '/top'
+          to: '/'
         },
         {
           icon: 'mdi-apps',
@@ -123,7 +123,7 @@ export default {
       footerLinks: [
         {
           title: 'ホーム',
-          to: '/top'
+          to: '/'
         },
         {
           title: 'お問い合わせ',
@@ -177,9 +177,10 @@ export default {
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
       localStorage.removeItem('loginDateTime')
-      this.$router.push('/top')
-      // location.replace('http://localhost:8000/top')
-      location.replace('https://spolead.com/top')
+      this.$router.push('/')
+      // due to local development
+      // location.replace('http://localhost:8000/')
+      location.replace('https://spolead.com/')
       //   }
       // }).catch((err) => {
       //   console.log('ERROR', err)

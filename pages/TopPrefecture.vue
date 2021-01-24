@@ -210,7 +210,7 @@ export default {
       this.$router.push('/login')
     },
     topSports () {
-      this.$router.push('/top')
+      this.$router.push('/')
     },
     showTeamsRelatedToCity (cityCode) {
       this.$router.push({ name: 'Teams', params: { cityCode } })

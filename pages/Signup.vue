@@ -120,7 +120,8 @@ export default {
               localStorage.setItem('token', res.data.access_token)
               localStorage.setItem('userId', res.data.user_id)
               localStorage.setItem('loginDateTime', new Date())
-              location.replace('https://spolead.com/top')
+              // location.replace('http://localhost:8000/')
+              location.replace('https://spolead.com/')
               console.log('token →', res.data.access_token)
             }
           })
