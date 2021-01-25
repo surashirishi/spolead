@@ -139,6 +139,7 @@ export default {
           params
         }).then((res) => {
           if (res.status === 200) {
+            scrollTo(0, 0)
             this.teams = res.data.teams
             this.totalPages = res.data.total_pages
             console.log('this.teams  ', this.teams)
