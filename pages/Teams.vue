@@ -141,7 +141,7 @@ export default {
           if (res.status === 200) {
             scrollTo(0, 0)
             this.teams = res.data.teams
-            this.totalPages = res.data.total_pages
+            this.totalPages = res.data.meta
             console.log('this.teams  ', this.teams)
             console.log('this.total_pages  ', this.totalPages)
           }

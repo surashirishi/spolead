@@ -36,6 +36,7 @@
               </v-col>
               <v-col cols="12">
                 <v-select
+                  v-model="player_flag"
                   :items="playerFlagList"
                   label="あなたの立場"
                   item-text="playerType"
@@ -218,7 +219,7 @@ export default {
         .dispatch('api/apiRequest', {
           api: 'reviewCreate',
           data: {
-            gender_id: this.gender_id,
+            gender: this.gender_id,
             enrollment_period: this.enrollment_period,
             age_group: this.age_group,
             player_flag: this.player_flag,
@@ -241,6 +242,25 @@ export default {
         })
         .then((response) => {
           if (response.status === 200) {
+            this.gender_id = ''
+            this.enrollment_period = ''
+            this.age_group = ''
+            this.player_flag = ''
+            this.general_post = ''
+            this.general_point = ''
+            this.policy_post = ''
+            this.policy_point = ''
+            this.organization_post = ''
+            this.organization_point = ''
+            this.activity_post = ''
+            this.activity_point = ''
+            this.environment_post = ''
+            this.environment_point = ''
+            this.event_post = ''
+            this.event_point = ''
+            this.cost_post = ''
+            this.cost_point = ''
+            this.teamId = ''
             this.closeModal()
           }
         })

@@ -220,7 +220,7 @@ export default {
         }).then((res) => {
           console.log(res)
           if (res.status === 200) {
-            this.team = res.data
+            this.team = res.data.team
             console.log(this.team)
             this.whichSports()
           }
@@ -236,7 +236,7 @@ export default {
         }).then((res) => {
           console.log(res)
           if (res.status === 200) {
-            this.reviewsList = res.data
+            this.reviewsList = res.data.reviews
           }
         })
     },
