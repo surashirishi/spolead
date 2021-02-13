@@ -4,7 +4,7 @@
       <v-container>
         <v-row justify="space-between">
           <v-col cols="auto">
-            <h1>{{ anonymousOrName }} さんの口コミ</h1>
+            <h1>{{ displayusername }} さんの口コミ</h1>
             <!-- <h2>性別: {{ displayGender }}  年代: {{ displayAgeGroup }}  在籍年: {{ review.enrollment_period }}  あなたの立場: {{ displayIsPlayer }}</h2> -->
             <p>- 性別: {{ displayGender }}</p>
             <p>- 年代: {{ displayAgeGroup }}</p>
@@ -82,8 +82,6 @@ export default {
   },
   data () {
     return {
-      userName: '',
-
       genderTypeList: [
         '男性',
         '女性'
@@ -102,8 +100,8 @@ export default {
     }
   },
   computed: {
-    anonymousOrName () {
-      return this.userName !== '' ? this.userName : '匿名'
+    displayusername () {
+      return this.review.username !== null ? this.review.username : '匿名'
     },
     displayGender () {
       return this.review.gender !== null ? this.genderTypeList[this.review.gender - 1] : '非公開'
@@ -117,9 +115,6 @@ export default {
 
   },
   mounted () {
-    if (this.review.user) {
-      this.userName = this.review.user.userName
-    }
   },
   created () {
   },

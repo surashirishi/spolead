@@ -10,6 +10,16 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6">
+                <v-text-field
+                  v-model="username"
+                  autocomplete="投稿者名(任意)"
+                  label="投稿者名(任意)"
+                />
+              </v-col>
+              <v-col cols="12" sm="6">
+                <!-- dammy for adjust layout -->
+              </v-col>
+              <v-col cols="12" sm="6">
                 <v-select
                   v-model="gender_id"
                   :items="genderTypeList"
@@ -21,7 +31,8 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  :items="['2015〜2020', '2010〜2014', '2005〜2009', '2000〜2004', 'それ以前']"
+                  v-model="enrollment_period"
+                  :items="enrollmentPeriodList"
                   label="在籍年"
                 />
               </v-col>
@@ -194,11 +205,14 @@ export default {
       event_point: 3,
       cost_post: '',
       cost_point: 3,
+      username: '',
 
       genderTypeList: [
         { gender: '男性', genderId: 1 },
         { gender: '女性', genderId: 2 }
       ],
+      enrollmentPeriodList: ['2015〜2021', '2010〜2014', '2005〜2009', '2000〜2004', 'それ以前'],
+
       ageGroupList: [
         { AgeGroupType: 'キッズ', AgeGroupId: 1 },
         { AgeGroupType: '小学生', AgeGroupId: 2 },
@@ -237,7 +251,8 @@ export default {
             event_point: this.event_point,
             cost_post: this.cost_post,
             cost_point: this.cost_point,
-            team_id: this.teamId
+            team_id: this.teamId,
+            username: this.username
           }
         })
         .then((response) => {
@@ -247,20 +262,20 @@ export default {
             this.age_group = ''
             this.player_flag = ''
             this.general_post = ''
-            this.general_point = ''
+            this.general_point = 0
             this.policy_post = ''
-            this.policy_point = ''
+            this.policy_point = 0
             this.organization_post = ''
-            this.organization_point = ''
+            this.organization_point = 0
             this.activity_post = ''
-            this.activity_point = ''
+            this.activity_point = 0
             this.environment_post = ''
-            this.environment_point = ''
+            this.environment_point = 0
             this.event_post = ''
-            this.event_point = ''
+            this.event_point = 0
             this.cost_post = ''
-            this.cost_point = ''
-            this.teamId = ''
+            this.cost_point = 0
+            this.username = ''
             this.closeModal()
           }
         })
