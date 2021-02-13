@@ -262,19 +262,19 @@ export default {
             this.age_group = ''
             this.player_flag = ''
             this.general_post = ''
-            this.general_point = 0
+            this.general_point = 3
             this.policy_post = ''
-            this.policy_point = 0
+            this.policy_point = 3
             this.organization_post = ''
-            this.organization_point = 0
+            this.organization_point = 3
             this.activity_post = ''
-            this.activity_point = 0
+            this.activity_point = 3
             this.environment_post = ''
-            this.environment_point = 0
+            this.environment_point = 3
             this.event_post = ''
-            this.event_point = 0
+            this.event_point = 3
             this.cost_post = ''
-            this.cost_point = 0
+            this.cost_point = 3
             this.username = ''
             this.closeModal()
           }
