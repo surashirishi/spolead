@@ -90,8 +90,9 @@ export default {
             }
           }).then((res) => {
             if (res.status === 200) {
-              localStorage.setItem('token', res.data.access_token)
-              localStorage.setItem('userId', res.data.user_id)
+              console.log('res', res)
+              localStorage.setItem('token', res.data.user.access_token)
+              localStorage.setItem('userId', res.data.user.user_id)
               localStorage.setItem('loginDateTime', new Date())
               console.log('token →', res.data.access_token)
               // location.replace('http://localhost:8000/')
